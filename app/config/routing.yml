@@ -1,3 +1,12 @@
+estimations_main:
+    resource: "@EstimationsMainBundle/Resources/config/routing.yml"
+    prefix:   /
+
+project:
+    resource: "@EstimationsMainBundle/Resources/config//routing/project.yml"
+    prefix:   /project
+
+
 app:
     resource: @AppBundle/Controller/
     type:     annotation
