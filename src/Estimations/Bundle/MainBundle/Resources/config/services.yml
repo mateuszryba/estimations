@@ -1,0 +1,7 @@
+parameters:
+#    estimations_main.example.class: Estimations\Bundle\MainBundle\Example
+
+services:
+#    estimations_main.example:
+#        class: %estimations_main.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

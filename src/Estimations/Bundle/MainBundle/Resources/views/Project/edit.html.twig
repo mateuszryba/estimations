@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Project edit</h1>
+
+    {{ form(edit_form) }}
+
+    <a href="{{ path('project') }}" class="btn btn-primary">
+        Back to the list
+    </a>
+    {{ form_start(delete_form) }}
+    {{ form_errors(delete_form) }}
+    {{ form_row(delete_form.submit) }}
+    {{ form_end(delete_form) }}
+{% endblock %}
