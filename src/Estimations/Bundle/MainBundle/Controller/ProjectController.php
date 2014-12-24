@@ -134,6 +134,28 @@ class ProjectController extends Controller
     }
 
     /**
+     * Adds issue to a Project
+     *
+     */
+    public function createIssueAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('EstimationsMainBundle:Project')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Project entity.');
+        }
+
+        $editForm = $this->createEditForm($entity);
+
+        return $this->render('EstimationsMainBundle:Project:createIssue.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+        ));
+    }
+
+    /**
     * Creates a form to edit a Project entity.
     *
     * @param Project $entity The entity

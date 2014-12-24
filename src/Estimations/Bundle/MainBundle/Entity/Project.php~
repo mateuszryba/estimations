@@ -223,37 +223,4 @@ class Project
     {
         return $this->clientVisits;
     }
-
-    /**
-     * Add issues
-     *
-     * @param \Estimations\Bundle\MainBundle\Entity\Issue $issues
-     * @return Project
-     */
-    public function addIssue(\Estimations\Bundle\MainBundle\Entity\Issue $issues)
-    {
-        $this->issues[] = $issues;
-
-        return $this;
-    }
-
-    /**
-     * Remove issues
-     *
-     * @param \Estimations\Bundle\MainBundle\Entity\Issue $issues
-     */
-    public function removeIssue(\Estimations\Bundle\MainBundle\Entity\Issue $issues)
-    {
-        $this->issues->removeElement($issues);
-    }
-
-    /**
-     * Get issues
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIssues()
-    {
-        return $this->issues;
-    }
 }
