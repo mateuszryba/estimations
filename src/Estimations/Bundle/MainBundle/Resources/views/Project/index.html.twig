@@ -16,6 +16,7 @@
                 <th>Sprinttime</th>
                 <th>Holidays</th>
                 <th>Clientvisits</th>
+                <th>Remaining SP</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -29,6 +30,7 @@
                 <td>{{ entity.sprintTime }}</td>
                 <td>{{ entity.holidays }}</td>
                 <td>{{ entity.clientVisits }}</td>
+                <td>{{ entity.remainingSP }}</td>
                 <td>
                     <a href="{{ path('project_show', { 'id': entity.id }) }}" class="btn btn-primary btn-xs">show</a>
                     <a href="{{ path('project_edit', { 'id': entity.id }) }}" class="btn btn-primary btn-xs">edit</a>

@@ -76,6 +76,13 @@ class Project
      */
     private $clientVisits;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="remainingSP", type="integer")
+     */
+    protected $remainingSP;
+
 
     /**
      * Get id
@@ -256,5 +263,28 @@ class Project
     public function getIssues()
     {
         return $this->issues;
+    }
+
+    /**
+     * Set remainingSP
+     *
+     * @param integer $remainingSP
+     * @return Project
+     */
+    public function setRemainingSP($remainingSP)
+    {
+        $this->remainingSP = $remainingSP;
+
+        return $this;
+    }
+
+    /**
+     * Get remainingSP
+     *
+     * @return integer 
+     */
+    public function getRemainingSP()
+    {
+        return $this->remainingSP;
     }
 }
