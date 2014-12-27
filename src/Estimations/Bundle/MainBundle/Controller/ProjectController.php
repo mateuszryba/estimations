@@ -103,8 +103,11 @@ class ProjectController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+        $issues = $entity->getIssues();
+
         return $this->render('EstimationsMainBundle:Project:show.html.twig', array(
             'entity'      => $entity,
+            'issues'      => $issues,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -130,28 +133,6 @@ class ProjectController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Adds issue to a Project
-     *
-     */
-    public function createIssueAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('EstimationsMainBundle:Project')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Project entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-
-        return $this->render('EstimationsMainBundle:Project:createIssue.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
         ));
     }
 

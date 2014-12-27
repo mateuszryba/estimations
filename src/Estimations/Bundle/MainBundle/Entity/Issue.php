@@ -16,7 +16,7 @@ class Issue
     /**
      * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="issues")
+     * @ORM\ManyToOne(targetEntity="Estimations\Bundle\MainBundle\Entity\Project", inversedBy="issues")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */
     protected $project;

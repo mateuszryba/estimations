@@ -4,6 +4,7 @@ namespace Estimations\Bundle\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Estimations\Bundle\MainBundle\Entity\Issue;
 
 /**
  * Project
@@ -15,7 +16,7 @@ class Project
 {
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Issue", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Estimations\Bundle\MainBundle\Entity\Issue", mappedBy="project")
      */
     protected $issues;
 

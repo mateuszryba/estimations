@@ -5,6 +5,7 @@ namespace Estimations\Bundle\MainBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Estimations\Bundle\MainBundle\Entity\Project;
 
 class IssueType extends AbstractType
 {
@@ -18,7 +19,6 @@ class IssueType extends AbstractType
             ->add('issueKey')
             ->add('timeSpent')
             ->add('storyPoints')
-            ->add('project', 'project')
         ;
     }
     

@@ -16,10 +16,10 @@ class Issue
     /**
      * @var Project
      *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="issues")
+     * @ORM\ManyToOne(targetEntity="Estimations\Bundle\MainBundle\Entity\Project", inversedBy="issues")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */
-    protected $category;
+    protected $project;
 
     /**
      * @var integer
@@ -129,5 +129,28 @@ class Issue
     public function getStoryPoints()
     {
         return $this->storyPoints;
+    }
+
+    /**
+     * Set project
+     *
+     * @param \Estimations\Bundle\MainBundle\Entity\Project $project
+     * @return Issue
+     */
+    public function setProject(\Estimations\Bundle\MainBundle\Entity\Project $project = null)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * Get project
+     *
+     * @return \Estimations\Bundle\MainBundle\Entity\Project 
+     */
+    public function getProject()
+    {
+        return $this->project;
     }
 }
