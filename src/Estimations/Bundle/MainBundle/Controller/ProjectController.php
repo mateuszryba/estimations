@@ -60,7 +60,7 @@ class ProjectController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Project $entity)
+    protected function createCreateForm(Project $entity)
     {
         $form = $this->createForm(new ProjectType(), $entity, array(
             'action' => $this->generateUrl('project_create'),
@@ -143,7 +143,7 @@ class ProjectController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Project $entity)
+    protected function createEditForm(Project $entity)
     {
         $form = $this->createForm(new ProjectType(), $entity, array(
             'action' => $this->generateUrl('project_update', array('id' => $entity->getId())),
@@ -209,13 +209,37 @@ class ProjectController extends Controller
     }
 
     /**
+     * @param $id
+     * @return mixed
+     */
+    public function calculateAverageAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $project = $em->getRepository('EstimationsMainBundle:Project')->find($id);
+
+        if (!$project) {
+            throw $this->createNotFoundException('Unable to find Project entity.');
+        }
+
+        $averageCalc = $this->get('estimations_main.calculateAverageSPs');
+        $averageCalc->calculateAverages($project);
+
+        $em->persist($project);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('project_show', array('id' => $id)));
+    }
+
+
+    /**
      * Creates a form to delete a Project entity by id.
      *
      * @param mixed $id The entity id
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    protected function createDeleteForm($id)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('project_delete', array('id' => $id)))

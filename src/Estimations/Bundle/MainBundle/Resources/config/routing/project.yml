@@ -29,6 +29,10 @@ project_delete:
     defaults: { _controller: "EstimationsMainBundle:Project:delete" }
     requirements: { _method: post|delete }
 
+project_calculate_average:
+    path:     /{id}/calc
+    defaults: { _controller: "EstimationsMainBundle:Project:calculateAverage" }
+
 issue_new:
     path:     /{projectId}/issues/new
     defaults: { _controller: "EstimationsMainBundle:Issue:new" }
@@ -36,34 +40,3 @@ issue_new:
 issue_create:
     path:     /{projectId}/issues/create
     defaults: { _controller: "EstimationsMainBundle:Issue:create"}
-
-#issue:
-#    path:     /
-#    defaults: { _controller: "EstimationsMainBundle:Issue:index" }
-#
-#issue_show:
-#    path:     /{id}/show
-#    defaults: { _controller: "EstimationsMainBundle:Issue:show" }
-#
-#issue_new:
-#    path:     /new
-#    defaults: { _controller: "EstimationsMainBundle:Issue:new" }
-#
-#issue_create:
-#    path:     /create
-#    defaults: { _controller: "EstimationsMainBundle:Issue:create" }
-#    requirements: { _method: post }
-#
-#issue_edit:
-#    path:     /{id}/edit
-#    defaults: { _controller: "EstimationsMainBundle:Issue:edit" }
-#
-#issue_update:
-#    path:     /{id}/update
-#    defaults: { _controller: "EstimationsMainBundle:Issue:update" }
-#    requirements: { _method: post|put }
-#
-#issue_delete:
-#    path:     /{id}/delete
-#    defaults: { _controller: "EstimationsMainBundle:Issue:delete" }
-#    requirements: { _method: post|delete }

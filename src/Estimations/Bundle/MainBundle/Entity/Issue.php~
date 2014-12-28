@@ -28,28 +28,28 @@ class Issue
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="issueKey", type="string", length=20)
      */
-    private $issueKey;
+    protected $issueKey;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="timeSpent", type="integer")
      */
-    private $timeSpent;
+    protected $timeSpent;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="storyPoints", type="integer")
      */
-    private $storyPoints;
+    protected $storyPoints;
 
 
     /**

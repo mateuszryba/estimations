@@ -51,7 +51,7 @@ class IssueController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Issue $entity)
+    protected function createCreateForm(Issue $entity)
     {
         $form = $this->createForm(new IssueType(), $entity, array(
             'action' => $this->generateUrl('issue_create', array(
