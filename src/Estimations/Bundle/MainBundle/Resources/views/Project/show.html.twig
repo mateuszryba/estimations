@@ -2,64 +2,105 @@
 
 {% block body -%}
     <h1>{{ entity.name }}</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>{{ 'main.id'|trans }}</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ entity.name }}</td>
-            </tr>
-            <tr>
-                <th>Hd</th>
-                <td>{{ entity.hd }}</td>
-            </tr>
-            <tr>
-                <th>Velocity</th>
-                <td>{{ entity.velocity }}</td>
-            </tr>
-            <tr>
-                <th>Sprint time</th>
-                <td>{{ entity.sprintTime }}</td>
-            </tr>
-            <tr>
-                <th>Holidays</th>
-                <td>{{ entity.holidays }}</td>
-            </tr>
-            <tr>
-                <th>Client visits</th>
-                <td>{{ entity.clientVisits }}</td>
-            </tr>
-            <tr>
-                <th>Remaining SP</th>
-                <td>{{ entity.remainingSP }}</td>
-            </tr>
-        </tbody>
-    </table>
-
     <a href="{{ path('project') }}" class="btn btn-primary">
-        Back to the list
+        {{ 'list.back'|trans }}
     </a>
     <a href="{{ path('project_edit', { 'id': entity.id }) }}" class="btn btn-primary">
-        Edit
+        {{ 'edit'|trans }}
+    </a>
+    <a href="{{ path('project_calculate_average', { 'id': entity.id }) }}" class="btn btn-warning">
+        {{ 'statistics.reload'|trans }}
     </a>
     {{ form(delete_form) }}
 
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'id'|trans }}</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'name'|trans }}</th>
+                    <td>{{ entity.name }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'hd'|trans }}</th>
+                    <td>{{ entity.hd }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'velocity'|trans }}</th>
+                    <td>{{ entity.velocity }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'sprint.time'|trans }}</th>
+                    <td>{{ entity.sprintTime }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'holidays'|trans }}</th>
+                    <td>{{ entity.holidays }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'client.visits'|trans }}</th>
+                    <td>{{ entity.clientVisits }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'remaining.sp'|trans }}</th>
+                    <td>{{ entity.remainingSP }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-8">
+                <h3>
+                    {{ 'statistics'|trans }}
+                </h3>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>{{ '1sp'|trans }}</th>
+                        <td>{{ entity.avg1sp }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ '2sp'|trans }}</th>
+                        <td>{{ entity.avg2sp }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ '3sp'|trans }}</th>
+                        <td>{{ entity.avg3sp }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ '5sp'|trans }}</th>
+                        <td>{{ entity.avg5sp }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ '8sp'|trans }}</th>
+                        <td>{{ entity.avg8sp }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ '13sp'|trans }}</th>
+                        <td>{{ entity.avg13sp }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <h2>{{ 'issues.list'|trans }}</h2>
+
     <a href="{{ path('issue_new', { 'projectId': entity.id }) }}" class="btn btn-success">
-        Add issue
+        {{ 'issue.add'|trans }}
     </a>
-
-
     <table class="table">
         <thead>
         <tr>
-            <td>Id</td>
-            <td>Key</td>
-            <td>Time Spent</td>
-            <td>Story Points</td>
+            <td>{{ 'id'|trans }}</td>
+            <td>{{ 'key'|trans }}</td>
+            <td>{{ 'time.spent'|trans }}</td>
+            <td>{{ 'story.points'|trans }}</td>
         </tr>
         </thead>
         <tbody>
