@@ -1,0 +1,7 @@
+parameters:
+    estimations_main.calculate.average.class: Estimations\Bundle\MainBundle\Services\AverageSPCalc
+
+services:
+    estimations_main.calculateAverageSPs:
+        class: %estimations_main.calculate.average.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,30 @@
+id:                   "Id"
+name: "Nazwa"
+hd:   "Ilość roboczogodzin na dzień"
+velocity: "Prędkość(SP)"
+sprint.time:  "Czas trwania sprintu"
+holidays: "Ilość dni urlopowych"
+client.visits: "Planowane wizyty u klienta"
+remaining.sp: "Story Pointy do zrealizowania"
+list.back: "Powrót do listy"
+edit: "Edytuj"
+issue.add: "Dodaj zadanie"
+issues.list: "Lista zadań"
+key: "Klucz"
+time.spent: "Czas zalogowany"
+story.points: "Story Points"
+statistics: "Statystyki"
+statistics.reload: "Aktualizuj statystyki"
+1sp: 1SP
+2sp: 2SP
+3sp: 3SP
+5sp: 5SP
+8sp: 8SP
+13sp: 13SP
+delete: Usuń
+actions: Akcje
+show: Pokaż
+project.list: "Lista projektów"
+project.create: "Dodaj projekt"
+project.edit: "Edycja projektu"
+issue.create: "Dodaj zadanie"
