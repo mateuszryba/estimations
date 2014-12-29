@@ -11,6 +11,10 @@
     <a href="{{ path('project_calculate_average', { 'id': entity.id }) }}" class="btn btn-warning">
         {{ 'statistics.reload'|trans }}
     </a>
+
+    <a href="{{ path('project_estimate_by_hours', { 'id': entity.id }) }}" class="btn btn-warning">
+        {{ 'estimations.create'|trans }}
+    </a>
     {{ form(delete_form) }}
 
     <div class="row">
