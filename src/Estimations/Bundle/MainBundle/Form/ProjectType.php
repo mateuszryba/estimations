@@ -21,7 +21,12 @@ class ProjectType extends AbstractType
             ->add('sprintTime')
             ->add('holidays')
             ->add('clientVisits')
-            ->add('remainingSP')
+            ->add('remaining1SP')
+            ->add('remaining2SP')
+            ->add('remaining3SP')
+            ->add('remaining5SP')
+            ->add('remaining8SP')
+            ->add('remaining13SP')
         ;
     }
     

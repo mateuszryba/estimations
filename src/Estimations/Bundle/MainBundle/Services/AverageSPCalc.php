@@ -30,36 +30,39 @@ class AverageSPCalc{
             'c13' => 0,
         ];
 
-        $issues = $project->getIssues();
+        $selectedIssues = $project->getSelectedSprintsIssues();
 
-        foreach($issues as $issue)
+        /**
+         * TODO: dodać możliwośc konfiguracji ilości sprintów branych pod uwagę
+         * tj. wrzucić 2 jako parametr dla admina
+         */
+        foreach($selectedIssues as $issue)
         {
-            switch($issue->getStoryPoints())
-            {
+            switch ($issue->getStoryPoints()) {
                 case 1:
-                    $arrayOfAverages['1'] +=  $issue->getTimeSpent();
-                    $arrayOfAverages['c1'] ++;
+                    $arrayOfAverages['1'] += $issue->getTimeSpent();
+                    $arrayOfAverages['c1']++;
                     break;
 
                 case 2:
-                    $arrayOfAverages['2'] +=  $issue->getTimeSpent();
-                    $arrayOfAverages['c2'] ++;
+                    $arrayOfAverages['2'] += $issue->getTimeSpent();
+                    $arrayOfAverages['c2']++;
                     break;
                 case 3:
-                    $arrayOfAverages['3'] +=  $issue->getTimeSpent();
-                    $arrayOfAverages['c3'] ++;
+                    $arrayOfAverages['3'] += $issue->getTimeSpent();
+                    $arrayOfAverages['c3']++;
                     break;
                 case 5:
-                    $arrayOfAverages['5'] +=  $issue->getTimeSpent();
-                    $arrayOfAverages['c5'] ++;
+                    $arrayOfAverages['5'] += $issue->getTimeSpent();
+                    $arrayOfAverages['c5']++;
                     break;
                 case 8:
-                    $arrayOfAverages['8'] +=  $issue->getTimeSpent();
-                    $arrayOfAverages['c8'] ++;
+                    $arrayOfAverages['8'] += $issue->getTimeSpent();
+                    $arrayOfAverages['c8']++;
                     break;
                 case 13:
-                    $arrayOfAverages['13'] +=  $issue->getTimeSpent();
-                    $arrayOfAverages['c13'] ++;
+                    $arrayOfAverages['13'] += $issue->getTimeSpent();
+                    $arrayOfAverages['c13']++;
                     break;
             }
         }

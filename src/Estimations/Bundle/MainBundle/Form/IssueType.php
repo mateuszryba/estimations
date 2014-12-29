@@ -19,6 +19,7 @@ class IssueType extends AbstractType
             ->add('issueKey')
             ->add('timeSpent')
             ->add('storyPoints')
+            ->add('sprint')
         ;
     }
     
