@@ -41,6 +41,6 @@ issue_create:
     path:     /{projectId}/issues/create
     defaults: { _controller: "EstimationsMainBundle:Issue:create"}
 
-project_estimate_by_hours:
-    path:     /{id}/hours
-    defaults: { _controller: "EstimationsMainBundle:Project:estimateByHours" }
+project_estimate:
+    path:     /{id}/estimate
+    defaults: { _controller: "EstimationsMainBundle:Project:estimate" }

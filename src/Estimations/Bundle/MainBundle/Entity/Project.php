@@ -694,6 +694,22 @@ class Project
 
         return $selectedIssues;
     }
+
+    public function getAveragePerSprint()
+    {
+        /**
+         * TODO: dodać możliwość konfiguracji ilości sprintów
+         */
+
+        $numberOfStoryPoints = 0;
+
+        foreach($this->issues as $issue)
+        {
+            $numberOfStoryPoints += $issue->getStoryPoints();
+        }
+
+        return $numberOfStoryPoints / 3;
+    }
     
     public function getRemainingMinutes(){
         $remainingMinutes
@@ -751,5 +767,18 @@ class Project
     public function getEstimationBySprints()
     {
         return $this->estimationBySprints;
+    }
+
+    public function getAllRemainingSP()
+    {
+        $allRemainingSP =
+            + $this->remaining1SP * 1
+            + $this->remaining2SP * 2
+            + $this->remaining3SP * 3
+            + $this->remaining5SP * 5
+            + $this->remaining8SP * 8
+            + $this->remaining13SP * 13;
+
+        return $allRemainingSP;
     }
 }

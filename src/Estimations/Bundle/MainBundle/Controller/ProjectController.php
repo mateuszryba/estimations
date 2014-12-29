@@ -235,7 +235,7 @@ class ProjectController extends Controller
      * @param $id
      * @return mixed
      */
-    public function estimateByHoursAction($id)
+    public function estimateAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -247,14 +247,18 @@ class ProjectController extends Controller
 
         $estimator = $this->get('estimations_main.estimate');
         $estimationByHours = $estimator->estimateByHours($project);
+        $estimationBySprints = $estimator->estimateBySprints($project);
 
         $project->setEstimationByHours($estimationByHours);
+        $project->setEstimationBySprints($estimationBySprints);
 
         $em->persist($project);
         $em->flush();
 
         return $this->redirect($this->generateUrl('project_show', array('id' => $id)));
     }
+
+
 
 
     /**

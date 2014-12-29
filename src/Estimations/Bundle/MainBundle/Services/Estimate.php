@@ -5,6 +5,7 @@ namespace Estimations\Bundle\MainBundle\Services;
 use Estimations\Bundle\MainBundle\Entity\Project;
 use Estimations\Bundle\MainBundle\Entity\Issue;
 use Estimations\Bundle\MainBundle\Services\BusinessDays;
+use \DateTime;
 
 class Estimate{
     public function __construct(BusinessDays $businessDays)
@@ -17,8 +18,26 @@ class Estimate{
         $minutesPerDay = $project->getHd() * 60;
 
         $remainingDays = $project->getRemainingMinutes() / $minutesPerDay;
+        $remainingDays += $project->getClientVisits() + $project->getHolidays();
 
         $endDate = $this->businessDays->getEndDate(date("Y/m/d"), $remainingDays);
+
+        return $endDate;
+    }
+
+    public function estimateBySprints(Project $project)
+    {
+        $avgStoryPointsPerSprint = $project->getAveragePerSprint();
+
+        $project->setVelocity($avgStoryPointsPerSprint);
+
+        $remainingSprints = $project->getAllRemainingSP() / $avgStoryPointsPerSprint;
+
+        $remainingWeeks = ceil($remainingSprints) * $project->getSprintTime();
+
+        $endDate = new DateTime();
+
+        $endDate->modify("+".$remainingWeeks." weeks");
 
         return $endDate;
     }

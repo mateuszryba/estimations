@@ -12,7 +12,7 @@
         {{ 'statistics.reload'|trans }}
     </a>
 
-    <a href="{{ path('project_estimate_by_hours', { 'id': entity.id }) }}" class="btn btn-warning">
+    <a href="{{ path('project_estimate', { 'id': entity.id }) }}" class="btn btn-warning">
         {{ 'estimations.create'|trans }}
     </a>
     {{ form(delete_form) }}
@@ -92,8 +92,12 @@
     <table class="table">
         <tbody>
         <tr>
-            <th>{{ 'estimation.hour'|trans }}</th>
+            <th>{{ 'estimations.hours'|trans }}</th>
             <td>{{ entity.estimationByHours|date('Y-m-d') }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'estimations.sprints'|trans }}</th>
+            <td>{{ entity.estimationBySprints|date('Y-m-d') }}</td>
         </tr>
         </tbody>
     </table>
