@@ -231,6 +231,35 @@ class ProjectController extends Controller
         return $this->redirect($this->generateUrl('project_show', array('id' => $id)));
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function estimateAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $project = $em->getRepository('EstimationsMainBundle:Project')->find($id);
+
+        if (!$project) {
+            throw $this->createNotFoundException('Unable to find Project entity.');
+        }
+
+        $estimator = $this->get('estimations_main.estimate');
+        $estimationByHours = $estimator->estimateByHours($project);
+        $estimationBySprints = $estimator->estimateBySprints($project);
+
+        $project->setEstimationByHours($estimationByHours);
+        $project->setEstimationBySprints($estimationBySprints);
+
+        $em->persist($project);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('project_show', array('id' => $id)));
+    }
+
+
+
 
     /**
      * Creates a form to delete a Project entity by id.

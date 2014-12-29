@@ -1,7 +1,13 @@
 parameters:
     estimations_main.calculate.average.class: Estimations\Bundle\MainBundle\Services\AverageSPCalc
+    estimations_main.estimate.class:          Estimations\Bundle\MainBundle\Services\Estimate
+    estimations_main.business_days.class:     Estimations\Bundle\MainBundle\Services\BusinessDays
 
 services:
     estimations_main.calculateAverageSPs:
         class: %estimations_main.calculate.average.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    estimations_main.business_days:
+        class: %estimations_main.business_days.class%
+    estimations_main.estimate:
+        class: %estimations_main.estimate.class%
+        arguments: [@estimations_main.business_days]

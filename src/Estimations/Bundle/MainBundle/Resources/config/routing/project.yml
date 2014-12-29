@@ -40,3 +40,7 @@ issue_new:
 issue_create:
     path:     /{projectId}/issues/create
     defaults: { _controller: "EstimationsMainBundle:Issue:create"}
+
+project_estimate:
+    path:     /{id}/estimate
+    defaults: { _controller: "EstimationsMainBundle:Project:estimate" }

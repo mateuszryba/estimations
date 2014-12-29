@@ -15,7 +15,6 @@
                 <th>{{ 'sprint.time'|trans }}</th>
                 <th>{{ 'holidays'|trans }}</th>
                 <th>{{ 'client.visits'|trans }}</th>
-                <th>{{ 'remaining.sp'|trans }}</th>
                 <th>{{ 'actions'|trans }}</th>
             </tr>
         </thead>
@@ -28,7 +27,6 @@
                 <td>{{ entity.sprintTime }}</td>
                 <td>{{ entity.holidays }}</td>
                 <td>{{ entity.clientVisits }}</td>
-                <td>{{ entity.remainingSP }}</td>
                 <td>
                     <a href="{{ path('project_show', { 'id': entity.id }) }}" class="btn btn-primary btn-xs">{{ 'show'|trans }}</a>
                     <a href="{{ path('project_edit', { 'id': entity.id }) }}" class="btn btn-primary btn-xs">{{ 'edit'|trans }}</a>
