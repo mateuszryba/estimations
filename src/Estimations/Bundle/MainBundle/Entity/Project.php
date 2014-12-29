@@ -79,11 +79,45 @@ class Project
     /**
      * @var integer
      *
-     * @ORM\Column(name="remainingSP", type="integer")
+     * @ORM\Column(name="remaining1SP", type="integer")
      */
-    protected $remainingSP;
+    protected $remaining1SP;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="remaining2SP", type="integer")
+     */
+    protected $remaining2SP;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="remaining3SP", type="integer")
+     */
+    protected $remaining3SP;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="remaining5SP", type="integer")
+     */
+    protected $remaining5SP;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="remaining8SP", type="integer")
+     */
+    protected $remaining8SP;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="remaining13SP", type="integer")
+     */
+    protected $remaining13SP;
+    
     /**
      * @var float
      *
@@ -139,6 +173,21 @@ class Project
     protected $avg13SP;
 
 
+
+    /**
+     * @var datetime
+     *
+     * @ORM\Column(name="estimationByHours", type="datetime", nullable=true)
+     */
+    protected $estimationByHours;
+
+
+    /**
+     * @var datetime
+     *
+     * @ORM\Column(name="estimationBySprints", type="datetime", nullable=true)
+     */
+    protected $estimationBySprints;
 
     /**
      * Get id
@@ -320,29 +369,7 @@ class Project
     {
         return $this->issues;
     }
-
-    /**
-     * Set remainingSP
-     *
-     * @param integer $remainingSP
-     * @return Project
-     */
-    public function setRemainingSP($remainingSP)
-    {
-        $this->remainingSP = $remainingSP;
-
-        return $this;
-    }
-
-    /**
-     * Get remainingSP
-     *
-     * @return integer 
-     */
-    public function getRemainingSP()
-    {
-        return $this->remainingSP;
-    }
+    
 
     /**
      * Set avg1SP
@@ -498,5 +525,231 @@ class Project
         $this->avg13SP = 0.0;
 
         return $this;
+    }
+
+    /**
+     * Set remaining1SP
+     *
+     * @param integer $remaining1SP
+     * @return Project
+     */
+    public function setRemaining1SP($remaining1SP)
+    {
+        $this->remaining1SP = $remaining1SP;
+
+        return $this;
+    }
+
+    /**
+     * Get remaining1SP
+     *
+     * @return integer 
+     */
+    public function getRemaining1SP()
+    {
+        return $this->remaining1SP;
+    }
+
+    /**
+     * Set remaining2SP
+     *
+     * @param integer $remaining2SP
+     * @return Project
+     */
+    public function setRemaining2SP($remaining2SP)
+    {
+        $this->remaining2SP = $remaining2SP;
+
+        return $this;
+    }
+
+    /**
+     * Get remaining2SP
+     *
+     * @return integer 
+     */
+    public function getRemaining2SP()
+    {
+        return $this->remaining2SP;
+    }
+
+    /**
+     * Set remaining3SP
+     *
+     * @param integer $remaining3SP
+     * @return Project
+     */
+    public function setRemaining3SP($remaining3SP)
+    {
+        $this->remaining3SP = $remaining3SP;
+
+        return $this;
+    }
+
+    /**
+     * Get remaining3SP
+     *
+     * @return integer 
+     */
+    public function getRemaining3SP()
+    {
+        return $this->remaining3SP;
+    }
+
+    /**
+     * Set remaining5SP
+     *
+     * @param integer $remaining5SP
+     * @return Project
+     */
+    public function setRemaining5SP($remaining5SP)
+    {
+        $this->remaining5SP = $remaining5SP;
+
+        return $this;
+    }
+
+    /**
+     * Get remaining5SP
+     *
+     * @return integer 
+     */
+    public function getRemaining5SP()
+    {
+        return $this->remaining5SP;
+    }
+
+    /**
+     * Set remaining8SP
+     *
+     * @param integer $remaining8SP
+     * @return Project
+     */
+    public function setRemaining8SP($remaining8SP)
+    {
+        $this->remaining8SP = $remaining8SP;
+
+        return $this;
+    }
+
+    /**
+     * Get remaining8SP
+     *
+     * @return integer 
+     */
+    public function getRemaining8SP()
+    {
+        return $this->remaining8SP;
+    }
+
+    /**
+     * Set remaining13SP
+     *
+     * @param integer $remaining13SP
+     * @return Project
+     */
+    public function setRemaining13SP($remaining13SP)
+    {
+        $this->remaining13SP = $remaining13SP;
+
+        return $this;
+    }
+
+    /**
+     * Get remaining13SP
+     *
+     * @return integer 
+     */
+    public function getRemaining13SP()
+    {
+        return $this->remaining13SP;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastSprint()
+    {
+        $sprints = $this->issues->map(function($issue) {
+            return $issue->getSprint();
+        })->toArray();
+
+        return max($sprints);
+    }
+
+
+    public function getSelectedSprintsIssues()
+    {
+        $lastSprint = $this->getLastSprint();
+
+        /**
+         * TODO: umożliwić konfiguracje ilości sprintów
+         */
+        foreach ($this->issues as $issue) {
+            if($issue->getSprint() > $lastSprint - 3)
+            {
+                $selectedIssues[] = $issue;
+            }
+        }
+
+        return $selectedIssues;
+    }
+    
+    public function getRemainingMinutes(){
+        $remainingMinutes
+            = $this->getAvg1SP() * $this->getRemaining1SP()
+            + $this->getAvg2SP() * $this->getRemaining2SP()
+            + $this->getAvg3SP() * $this->getRemaining3SP()
+            + $this->getAvg5SP() * $this->getRemaining5SP()
+            + $this->getAvg8SP() * $this->getRemaining8SP()
+            + $this->getAvg13SP() * $this->getRemaining13SP();
+
+        return $remainingMinutes;
+    }
+
+    /**
+     * Set estimationByHours
+     *
+     * @param \DateTime $estimationByHours
+     * @return Project
+     */
+    public function setEstimationByHours($estimationByHours)
+    {
+        $this->estimationByHours = $estimationByHours;
+
+        return $this;
+    }
+
+    /**
+     * Get estimationByHours
+     *
+     * @return \DateTime 
+     */
+    public function getEstimationByHours()
+    {
+        return $this->estimationByHours;
+    }
+
+    /**
+     * Set estimationBySprints
+     *
+     * @param \DateTime $estimationBySprints
+     * @return Project
+     */
+    public function setEstimationBySprints($estimationBySprints)
+    {
+        $this->estimationBySprints = $estimationBySprints;
+
+        return $this;
+    }
+
+    /**
+     * Get estimationBySprints
+     *
+     * @return \DateTime 
+     */
+    public function getEstimationBySprints()
+    {
+        return $this->estimationBySprints;
     }
 }

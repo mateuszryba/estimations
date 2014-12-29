@@ -51,6 +51,13 @@ class Issue
      */
     protected $storyPoints;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sprint", type="integer")
+     */
+    protected $sprint;
+
 
     /**
      * Get id
@@ -152,5 +159,28 @@ class Issue
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * Set sprint
+     *
+     * @param integer $sprint
+     * @return Issue
+     */
+    public function setSprint($sprint)
+    {
+        $this->sprint = $sprint;
+
+        return $this;
+    }
+
+    /**
+     * Get sprint
+     *
+     * @return integer 
+     */
+    public function getSprint()
+    {
+        return $this->sprint;
     }
 }
