@@ -4,9 +4,11 @@ namespace Estimations\Bundle\MainBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Estimations\Bundle\MainBundle\Entity\Project;
 use Estimations\Bundle\MainBundle\Form\ProjectType;
+use Estimations\Bundle\MainBundle\Entity\Document;
 
 /**
  * Project controller.
@@ -259,7 +261,50 @@ class ProjectController extends Controller
     }
 
 
+    public function loadIssuesAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
 
+        $project = $em->getRepository('EstimationsMainBundle:Project')->find($id);
+
+        $document = new Document();
+
+        $form = $this->createFormBuilder($document)
+            ->add('doc', 'file', array('label' => false))
+            ->getForm()
+        ;
+
+        if ($this->getRequest()->getMethod() === 'POST'){
+            $form->handleRequest($this->getRequest());
+            if($form->isValid()){
+                $document->upload();
+                if(file_exists($document->getAbsolutePath()))
+                {
+                    $issues = $this->get('estimations_main.importer')->importIssuesFromXls($document->getAbsolutePath(), $project);
+
+                    foreach($issues as $issue)
+                    {
+                        $em->persist($issue);
+                        $project->addIssue($issue);
+                    }
+
+                    $em->persist($project);
+                    $em->flush();
+
+                    $this->redirect($this->generateUrl('project'));
+                }
+                else
+                {
+                    echo('File does not exist');
+                    exit;
+                }
+            }
+        }
+
+        return $this->render('EstimationsMainBundle:Project:upload.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
 
     /**
      * Creates a form to delete a Project entity by id.
@@ -273,7 +318,7 @@ class ProjectController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('project_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'delete'))
+            ->add('submit', 'submit', array('label' => 'delete', 'attr' => array('class' => 'btn btn-danger')))
             ->getForm()
         ;
     }

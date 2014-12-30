@@ -32,10 +32,6 @@ class AverageSPCalc{
 
         $selectedIssues = $project->getSelectedSprintsIssues();
 
-        /**
-         * TODO: dodać możliwośc konfiguracji ilości sprintów branych pod uwagę
-         * tj. wrzucić 2 jako parametr dla admina
-         */
         foreach($selectedIssues as $issue)
         {
             switch ($issue->getStoryPoints()) {

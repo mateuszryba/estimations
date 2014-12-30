@@ -29,7 +29,7 @@
                 <td>{{ entity.clientVisits }}</td>
                 <td>
                     <a href="{{ path('project_show', { 'id': entity.id }) }}" class="btn btn-primary btn-xs">{{ 'show'|trans }}</a>
-                    <a href="{{ path('project_edit', { 'id': entity.id }) }}" class="btn btn-primary btn-xs">{{ 'edit'|trans }}</a>
+                    <a href="{{ path('project_edit', { 'id': entity.id }) }}" class="btn btn-warning btn-xs">{{ 'edit'|trans }}</a>
                 </td>
             </tr>
         {% endfor %}
