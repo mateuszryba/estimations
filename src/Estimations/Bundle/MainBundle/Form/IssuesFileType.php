@@ -15,7 +15,12 @@ class IssuesFileType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('attachment', 'file')
+        $builder
+            ->add('doc', 'file', array(
+                'label' => false,
+                'attr' => array(
+                    'class' => 'btn btn-success'
+                )))
         ;
     }
 

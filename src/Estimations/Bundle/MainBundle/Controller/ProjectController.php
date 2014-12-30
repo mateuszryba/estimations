@@ -2,6 +2,7 @@
 
 namespace Estimations\Bundle\MainBundle\Controller;
 
+use Estimations\Bundle\MainBundle\Form\IssuesFileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -260,22 +261,41 @@ class ProjectController extends Controller
         return $this->redirect($this->generateUrl('project_show', array('id' => $id)));
     }
 
+    protected function createLoadForm(Document $document, $id)
+    {
+        $form = $this->createForm(new IssuesFileType(), $document, array(
+            'action' => $this->generateUrl('project_import_issues', array('id'=>$id)),
+            'method' => 'POST',
+        ));
+        $form->add('submit', 'submit', array(
+            'label' =>  $this->get('translator')->trans('import'),
+            'attr' => array('class' => 'btn-success')
+        ));
 
-    public function loadIssuesAction($id)
+        return $form;
+    }
+
+    public function loadAction($id){
+        $document = new Document();
+
+        $form   = $this->createLoadForm($document, $id);
+
+        return $this->render('EstimationsMainBundle:Project:upload.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    public function loadIssuesAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $project = $em->getRepository('EstimationsMainBundle:Project')->find($id);
 
         $document = new Document();
-
-        $form = $this->createFormBuilder($document)
-            ->add('doc', 'file', array('label' => false))
-            ->getForm()
-        ;
+        $form = $this->createLoadForm($document, $id);
+        $form->handleRequest($request);
 
         if ($this->getRequest()->getMethod() === 'POST'){
-            $form->handleRequest($this->getRequest());
+           // $form->handleRequest($this->getRequest());
             if($form->isValid()){
                 $document->upload();
                 if(file_exists($document->getAbsolutePath()))
@@ -300,10 +320,7 @@ class ProjectController extends Controller
                 }
             }
         }
-
-        return $this->render('EstimationsMainBundle:Project:upload.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        return $this->redirect($this->generateUrl('project_show', array('id'=>$id)));
     }
 
     /**
