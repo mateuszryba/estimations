@@ -26,6 +26,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $project->setRemaining5SP(40);
         $project->setRemaining8SP(20);
         $project->setRemaining13SP(10);
+        $project->setStatisticsSprints(4);
 
         $project2 = new Project();
         $project2->setName("Portal społecznościowy");
@@ -40,6 +41,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $project2->setRemaining5SP(25);
         $project2->setRemaining8SP(16);
         $project2->setRemaining13SP(6);
+        $project2->setStatisticsSprints(3);
 
         $manager->persist($project);
         $manager->persist($project2);
