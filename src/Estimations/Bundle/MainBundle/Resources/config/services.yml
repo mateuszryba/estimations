@@ -2,6 +2,8 @@ parameters:
     estimations_main.calculate.average.class: Estimations\Bundle\MainBundle\Services\AverageSPCalc
     estimations_main.estimate.class:          Estimations\Bundle\MainBundle\Services\Estimate
     estimations_main.business_days.class:     Estimations\Bundle\MainBundle\Services\BusinessDays
+    estimations_main.importer.class:          Estimations\Bundle\MainBundle\Services\Importer
+    estimations_main.updater.class:           Estimations\Bundle\MainBundle\Services\StatisticsUpdater
 
 services:
     estimations_main.calculateAverageSPs:
@@ -11,3 +13,5 @@ services:
     estimations_main.estimate:
         class: %estimations_main.estimate.class%
         arguments: [@estimations_main.business_days]
+    estimations_main.importer:
+        class: %estimations_main.importer.class%

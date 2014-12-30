@@ -27,6 +27,7 @@ class ProjectType extends AbstractType
             ->add('remaining5SP')
             ->add('remaining8SP')
             ->add('remaining13SP')
+            ->add('statisticsSprints')
         ;
     }
     

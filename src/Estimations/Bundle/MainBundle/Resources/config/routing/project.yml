@@ -44,3 +44,11 @@ issue_create:
 project_estimate:
     path:     /{id}/estimate
     defaults: { _controller: "EstimationsMainBundle:Project:estimate" }
+
+project_import:
+    path:     /{id}/load
+    defaults: { _controller: "EstimationsMainBundle:Project:load" }
+
+project_import_issues:
+    path:     /{id}/load/issues
+    defaults: { _controller: "EstimationsMainBundle:Project:loadIssues" }

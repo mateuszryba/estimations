@@ -189,6 +189,14 @@ class Project
      */
     protected $estimationBySprints;
 
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="statisticsSprints", type="integer")
+     */
+    protected $statisticsSprints;
+
     /**
      * Get id
      *
@@ -338,7 +346,7 @@ class Project
     }
 
     /**
-     * Add issues
+     * Add single issue
      *
      * @param \Estimations\Bundle\MainBundle\Entity\Issue $issues
      * @return Project
@@ -349,6 +357,20 @@ class Project
 
         return $this;
     }
+
+    /**
+     * Add issues
+     *
+     * @param \ArrayCollection $issues
+     * @return Project
+     */
+    public function addIssues($issues)
+    {
+        $this->issues[] = $issues;
+
+        return $this;
+    }
+
 
     /**
      * Remove issues
@@ -677,16 +699,14 @@ class Project
         return max($sprints);
     }
 
-
     public function getSelectedSprintsIssues()
     {
         $lastSprint = $this->getLastSprint();
 
-        /**
-         * TODO: umożliwić konfiguracje ilości sprintów
-         */
+        $selectedIssues = array();
+
         foreach ($this->issues as $issue) {
-            if($issue->getSprint() > $lastSprint - 3)
+            if($issue->getSprint() > $lastSprint - $this->statisticsSprints)
             {
                 $selectedIssues[] = $issue;
             }
@@ -697,18 +717,16 @@ class Project
 
     public function getAveragePerSprint()
     {
-        /**
-         * TODO: dodać możliwość konfiguracji ilości sprintów
-         */
-
         $numberOfStoryPoints = 0;
 
-        foreach($this->issues as $issue)
+        var_dump($this->getSelectedSprintsIssues());exit;
+
+        foreach($this->getSelectedSprintsIssues() as $issue)
         {
             $numberOfStoryPoints += $issue->getStoryPoints();
         }
 
-        return $numberOfStoryPoints / 3;
+        return $numberOfStoryPoints / $this->statisticsSprints;
     }
     
     public function getRemainingMinutes(){
@@ -780,5 +798,28 @@ class Project
             + $this->remaining13SP * 13;
 
         return $allRemainingSP;
+    }
+
+    /**
+     * Set statisticsSprints
+     *
+     * @param integer $statisticsSprints
+     * @return Project
+     */
+    public function setStatisticsSprints($statisticsSprints)
+    {
+        $this->statisticsSprints = $statisticsSprints;
+
+        return $this;
+    }
+
+    /**
+     * Get statisticsSprints
+     *
+     * @return integer 
+     */
+    public function getStatisticsSprints()
+    {
+        return $this->statisticsSprints;
     }
 }

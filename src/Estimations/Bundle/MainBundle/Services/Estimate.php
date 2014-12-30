@@ -17,7 +17,7 @@ class Estimate{
     {
         $minutesPerDay = $project->getHd() * 60;
 
-        $remainingDays = $project->getRemainingMinutes() / $minutesPerDay;
+        $remainingDays = $project->getRemainingMinutes() / 60 / $minutesPerDay;
         $remainingDays += $project->getClientVisits() + $project->getHolidays();
 
         $endDate = $this->businessDays->getEndDate(date("Y/m/d"), $remainingDays);
