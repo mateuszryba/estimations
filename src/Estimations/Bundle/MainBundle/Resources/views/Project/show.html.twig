@@ -69,27 +69,27 @@
                             </tr>
                             <tr>
                                 <th>{{ '1sp'|trans }}</th>
-                                <td>{{ (entity.avg1sp / 3600 )|number_format(2) }} h</td>
+                                <td>{{ (entity.avg1sp / 60 )|number_format(2) }} h</td>
                             </tr>
                             <tr>
                                 <th>{{ '2sp'|trans }}</th>
-                                <td>{{ (entity.avg2sp/ 3600 )|number_format(2) }} h</td>
+                                <td>{{ (entity.avg2sp/ 60 )|number_format(2) }} h</td>
                             </tr>
                             <tr>
                                 <th>{{ '3sp'|trans }}</th>
-                                <td>{{ (entity.avg3sp / 3600 )|number_format(2) }} h</td>
+                                <td>{{ (entity.avg3sp / 60 )|number_format(2) }} h</td>
                             </tr>
                             <tr>
                                 <th>{{ '5sp'|trans }}</th>
-                                <td>{{ (entity.avg5sp / 3600 )|number_format(2) }} h</td>
+                                <td>{{ (entity.avg5sp / 60 )|number_format(2) }} h</td>
                             </tr>
                             <tr>
                                 <th>{{ '8sp'|trans }}</th>
-                                <td>{{ (entity.avg8sp/ 3600 )|number_format(2) }} h</td>
+                                <td>{{ (entity.avg8sp/ 60 )|number_format(2) }} h</td>
                             </tr>
                             <tr>
                                 <th>{{ '13sp'|trans }}</th>
-                                <td>{{ (entity.avg13sp/ 3600 )|number_format(2) }} h</td>
+                                <td>{{ (entity.avg13sp/ 60 )|number_format(2) }} h</td>
                             </tr>
                             </tbody>
                         </table>
@@ -165,7 +165,7 @@
                 <tr>
                     <td>{{ issue.id }}</td>
                     <td>{{ issue.issueKey }}</td>
-                    <td>{{ (issue.timeSpent/ 3600 )|number_format(2) }} h</td>
+                    <td>{{ (issue.timeSpent/ 60 )|number_format(2) }} h</td>
                     <td>{{ issue.storyPoints }}</td>
                     <td>{{ issue.sprint }}</td>
                     <td>

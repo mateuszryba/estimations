@@ -20,7 +20,7 @@ class Importer
             $issue = new Issue();
             $values = explode(";", $row['Key;TimeSpent;Story Points;Sprint']);
             $issue->setIssueKey($values['0']);
-            $issue->setTimeSpent($values['1']);
+            $issue->setTimeSpent($values['1'] / 60); // csv file contains time in seconds, so convert to minutes
             $issue->setStoryPoints($values['2']);
             $issue->setSprint($values['3']);
             $issue->setProject($project);
