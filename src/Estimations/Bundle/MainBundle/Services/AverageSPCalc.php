@@ -5,7 +5,8 @@ namespace Estimations\Bundle\MainBundle\Services;
 use Estimations\Bundle\MainBundle\Entity\Project;
 use Estimations\Bundle\MainBundle\Entity\Issue;
 
-class AverageSPCalc{
+class AverageSPCalc
+{
     public function __construct()
     {
 
@@ -32,8 +33,7 @@ class AverageSPCalc{
 
         $selectedIssues = $project->getSelectedSprintsIssues();
 
-        foreach($selectedIssues as $issue)
-        {
+        foreach ($selectedIssues as $issue) {
             switch ($issue->getStoryPoints()) {
                 case 1:
                     $arrayOfAverages['1'] += $issue->getTimeSpent();
@@ -76,23 +76,23 @@ class AverageSPCalc{
      */
     protected function assignAveragesToProject(Project $project, array $arrayOfAverages)
     {
-        if(0 != $arrayOfAverages['c1']){
-            $project->setAvg1SP($arrayOfAverages['1']/(float)$arrayOfAverages['c1']);
+        if (0 != $arrayOfAverages['c1']) {
+            $project->setAvg1SP($arrayOfAverages['1'] / (float)$arrayOfAverages['c1']);
         }
-        if(0 != $arrayOfAverages['c2']){
-            $project->setAvg2SP($arrayOfAverages['2']/(float)$arrayOfAverages['c2']);
+        if (0 != $arrayOfAverages['c2']) {
+            $project->setAvg2SP($arrayOfAverages['2'] / (float)$arrayOfAverages['c2']);
         }
-        if(0 != $arrayOfAverages['c3']){
-            $project->setAvg3SP($arrayOfAverages['3']/(float)$arrayOfAverages['c3']);
+        if (0 != $arrayOfAverages['c3']) {
+            $project->setAvg3SP($arrayOfAverages['3'] / (float)$arrayOfAverages['c3']);
         }
-        if(0 != $arrayOfAverages['c5']){
-            $project->setAvg5SP($arrayOfAverages['5']/(float)$arrayOfAverages['c5']);
+        if (0 != $arrayOfAverages['c5']) {
+            $project->setAvg5SP($arrayOfAverages['5'] / (float)$arrayOfAverages['c5']);
         }
-        if(0 != $arrayOfAverages['c8']){
-            $project->setAvg8SP($arrayOfAverages['8']/(float)$arrayOfAverages['c8']);
+        if (0 != $arrayOfAverages['c8']) {
+            $project->setAvg8SP($arrayOfAverages['8'] / (float)$arrayOfAverages['c8']);
         }
-        if(0 != $arrayOfAverages['c13']){
-            $project->setAvg13SP($arrayOfAverages['13']/(float)$arrayOfAverages['c13']);
+        if (0 != $arrayOfAverages['c13']) {
+            $project->setAvg13SP($arrayOfAverages['13'] / (float)$arrayOfAverages['c13']);
         }
 
         return $project;

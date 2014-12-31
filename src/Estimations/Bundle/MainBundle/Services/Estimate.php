@@ -7,7 +7,8 @@ use Estimations\Bundle\MainBundle\Entity\Issue;
 use Estimations\Bundle\MainBundle\Services\BusinessDays;
 use \DateTime;
 
-class Estimate{
+class Estimate
+{
     public function __construct(BusinessDays $businessDays)
     {
         $this->businessDays = $businessDays;
@@ -35,7 +36,7 @@ class Estimate{
 
         $endDate = new DateTime();
 
-        $endDate->modify("+".$remainingWeeks." weeks");
+        $endDate->modify("+" . $remainingWeeks . " weeks");
 
         return $endDate;
     }

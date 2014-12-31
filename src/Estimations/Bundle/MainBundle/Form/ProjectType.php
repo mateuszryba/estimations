@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ProjectType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -27,10 +27,9 @@ class ProjectType extends AbstractType
             ->add('remaining5SP')
             ->add('remaining8SP')
             ->add('remaining13SP')
-            ->add('statisticsSprints')
-        ;
+            ->add('statisticsSprints');
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

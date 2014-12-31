@@ -6,15 +6,16 @@ use \DateTime;
 
 class BusinessDays
 {
-    const MONDAY    = 1;
-    const TUESDAY   = 2;
+    const MONDAY = 1;
+    const TUESDAY = 2;
     const WEDNESDAY = 3;
-    const THURSDAY  = 4;
-    const FRIDAY    = 5;
-    const SATURDAY  = 6;
-    const SUNDAY    = 7;
+    const THURSDAY = 4;
+    const FRIDAY = 5;
+    const SATURDAY = 6;
+    const SUNDAY = 7;
 
-    public function __construct(){
+    public function __construct()
+    {
 
     }
 
@@ -23,12 +24,13 @@ class BusinessDays
      * TODO: przesunąć do parameters
      **/
 
-    public function getEndDate($startDate, $numberOfDays){
+    public function getEndDate($startDate, $numberOfDays)
+    {
         $nonBusinessDays = array(
             $this::SATURDAY,
             $this::SUNDAY
         );
-        $holidays=array(
+        $holidays = array(
             "2015/01/01",
             "2015/01/06",
             "2015/05/01",
@@ -54,7 +56,8 @@ class BusinessDays
         return $endDate;
     }
 
-    protected function addBusinessDays($startDate, $numberOfDays, $holidays, $nonBusinessDays) {
+    protected function addBusinessDays($startDate, $numberOfDays, $holidays, $nonBusinessDays)
+    {
         $date = date_create_from_format('Y/m/d', $startDate);
         $i = 0;
         while ($i < $numberOfDays) {
@@ -66,7 +69,8 @@ class BusinessDays
         return $date;
     }
 
-    protected function isBusinessDay(DateTime $date, $holidays, $nonBusinessDays) {
+    protected function isBusinessDay(DateTime $date, $holidays, $nonBusinessDays)
+    {
         if (in_array((int)$date->format('N'), $nonBusinessDays)) {
             return false; //Date is a nonBusinessDay.
         }

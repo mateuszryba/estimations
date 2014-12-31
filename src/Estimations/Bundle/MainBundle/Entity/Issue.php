@@ -62,7 +62,7 @@ class Issue
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -85,7 +85,7 @@ class Issue
     /**
      * Get issueKey
      *
-     * @return string 
+     * @return string
      */
     public function getIssueKey()
     {
@@ -108,7 +108,7 @@ class Issue
     /**
      * Get timeSpent
      *
-     * @return integer 
+     * @return integer
      */
     public function getTimeSpent()
     {
@@ -131,7 +131,7 @@ class Issue
     /**
      * Get storyPoints
      *
-     * @return integer 
+     * @return integer
      */
     public function getStoryPoints()
     {
@@ -154,7 +154,7 @@ class Issue
     /**
      * Get project
      *
-     * @return \Estimations\Bundle\MainBundle\Entity\Project 
+     * @return \Estimations\Bundle\MainBundle\Entity\Project
      */
     public function getProject()
     {
@@ -177,7 +177,7 @@ class Issue
     /**
      * Get sprint
      *
-     * @return integer 
+     * @return integer
      */
     public function getSprint()
     {
