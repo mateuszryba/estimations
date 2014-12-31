@@ -15,19 +15,46 @@ class ProjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('hd')
-            ->add('velocity')
-            ->add('sprintTime')
-            ->add('holidays')
-            ->add('clientVisits')
-            ->add('remaining1SP')
-            ->add('remaining2SP')
-            ->add('remaining3SP')
-            ->add('remaining5SP')
-            ->add('remaining8SP')
-            ->add('remaining13SP')
-            ->add('statisticsSprints');
+            ->add('name','text', array(
+                'label'=> 'form.name'
+            ))
+            ->add('hd','number', array(
+                'label'=> 'form.hd'
+            ))
+            ->add('velocity','number', array(
+                'label'=> 'form.velocity'
+            ))
+            ->add('sprintTime','number', array(
+                'label'=> 'form.sprintTime'
+            ))
+            ->add('holidays','number', array(
+                'label'=> 'form.holidays'
+            ))
+            ->add('clientVisits','number', array(
+                'label'=> 'form.clientVisits'
+            ))
+            ->add('remaining1SP','number', array(
+                'label'=> '1sp'
+            ))
+            ->add('remaining2SP','number', array(
+                'label'=> '2sp'
+            ))
+            ->add('remaining3SP','number', array(
+                'label'=> '3sp'
+            ))
+            ->add('remaining5SP','number', array(
+                'label'=> '5sp'
+            ))
+            ->add('remaining8SP','number', array(
+                'label'=> '8sp'
+            ))
+            ->add('remaining13SP','number', array(
+                'label'=> '13sp'
+            ))
+            ->add('statisticsSprints','number', array(
+                'label'=> 'form.statisticsSprints'
+            ))
+            ;
     }
 
     /**

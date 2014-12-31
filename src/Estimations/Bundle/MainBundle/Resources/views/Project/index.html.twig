@@ -6,15 +6,13 @@
         {{ 'project.create'|trans }}
     </a>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th>{{ 'name'|trans }}</th>
-            <th>{{ 'hd'|trans }}</th>
             <th>{{ 'velocity'|trans }}</th>
-            <th>{{ 'sprint.time'|trans }}</th>
-            <th>{{ 'holidays'|trans }}</th>
-            <th>{{ 'client.visits'|trans }}</th>
+            <th>{{ 'estimations.hours'|trans }}</th>
+            <th>{{ 'estimations.sprints'|trans }}</th>
             <th>{{ 'actions'|trans }}</th>
         </tr>
         </thead>
@@ -22,11 +20,9 @@
         {% for entity in entities %}
             <tr>
                 <td>{{ entity.name }}</td>
-                <td>{{ entity.hd }}</td>
                 <td>{{ entity.velocity }}</td>
-                <td>{{ entity.sprintTime }}</td>
-                <td>{{ entity.holidays }}</td>
-                <td>{{ entity.clientVisits }}</td>
+                <td>{{ entity.estimationByHours|date('Y-m-d')  }}</td>
+                <td>{{ entity.estimationBySprints|date('Y-m-d')  }}</td>
                 <td>
                     <a href="{{ path('project_show', { 'id': entity.id }) }}"
                        class="btn btn-primary btn-xs">{{ 'show'|trans }}</a>

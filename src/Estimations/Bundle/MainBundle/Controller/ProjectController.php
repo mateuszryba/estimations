@@ -72,7 +72,7 @@ class ProjectController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => $this->get('translator')->trans('project.add')));
 
         return $form;
     }
@@ -184,7 +184,6 @@ class ProjectController extends Controller
         return $this->render('EstimationsMainBundle:Project:edit.html.twig', array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -202,7 +201,7 @@ class ProjectController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => $this->get('translator')->trans('project.edit')));
 
         return $form;
     }
