@@ -349,7 +349,6 @@ class ProjectController extends Controller
         $form->handleRequest($request);
 
         if ($this->getRequest()->getMethod() === 'POST') {
-            // $form->handleRequest($this->getRequest());
             if ($form->isValid()) {
                 $document->upload();
                 if (file_exists($document->getAbsolutePath())) {
