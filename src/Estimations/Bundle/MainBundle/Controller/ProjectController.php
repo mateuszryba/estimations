@@ -2,6 +2,7 @@
 
 namespace Estimations\Bundle\MainBundle\Controller;
 
+use Doctrine\ORM\TransactionRequiredException;
 use Estimations\Bundle\MainBundle\Form\IssuesFileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -108,9 +109,20 @@ class ProjectController extends Controller
 
         $issues = $entity->getIssues();
 
+        $deleteIssueForms = array();
+
+        $deleteAllIssuesForm = $this->createDeleteAllIssuesForm($id)->createView();
+
+        foreach($issues as $issue)
+        {
+            $deleteIssueForms[$issue->getId()] = $this->createDeleteIssueForm($id, $issue->getId())->createView();
+        }
+
         return $this->render('EstimationsMainBundle:Project:show.html.twig', array(
             'entity'      => $entity,
             'issues'      => $issues,
+            'delete_issues_forms' => $deleteIssueForms,
+            'delete_all_issues_form' => $deleteAllIssuesForm,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -335,8 +347,79 @@ class ProjectController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('project_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'delete', 'attr' => array('class' => 'btn btn-danger')))
+            ->add('submit', 'submit', array('label' => 'delete.project', 'attr' => array('class' => 'btn btn-danger pull-right')))
             ->getForm()
         ;
     }
+
+
+    public function deleteIssueAction(Request $request, $projectId, $id)
+    {
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('EstimationsMainBundle:Issue')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Project entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('project_show', array('id'=>$projectId)));
+    }
+
+    protected function createDeleteIssueForm($projectId, $id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('issue_delete', array('id' => $id, 'projectId'=>$projectId)))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
+    }
+
+    public function deleteAllIssuesAction(Request $request, $projectId)
+    {
+        $form = $this->createDeleteAllIssuesForm($projectId);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('EstimationsMainBundle:Project')->find($projectId);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Project entity.');
+            }
+
+            $issues = $entity->getIssues();
+
+            foreach($issues as $issue)
+            {
+                $em->remove($issue);
+            }
+
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('project_show', array('id'=>$projectId)));
+    }
+
+    protected function createDeleteAllIssuesForm($projectId)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('delete_all_issues', array('projectId'=>$projectId)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array(
+                'label' => $this->get('translator')->trans('delete.all'),
+                'attr' => array(
+                    'class' => 'btn btn-danger'
+                )))
+            ->getForm()
+            ;
+    }
+
 }
