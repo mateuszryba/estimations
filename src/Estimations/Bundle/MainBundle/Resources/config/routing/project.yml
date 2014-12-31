@@ -41,6 +41,16 @@ issue_create:
     path:     /{projectId}/issues/create
     defaults: { _controller: "EstimationsMainBundle:Issue:create"}
 
+issue_delete:
+    path:     /{projectId}/issues/{id}/delete
+    defaults: { _controller: "EstimationsMainBundle:Project:deleteIssue"}
+    requirements: { _method: post|delete }
+
+delete_all_issues:
+    path:     /{projectId}/issues/deleteall
+    defaults: { _controller: "EstimationsMainBundle:Project:deleteAllIssues"}
+    requirements: { _method: post|delete }
+
 project_estimate:
     path:     /{id}/estimate
     defaults: { _controller: "EstimationsMainBundle:Project:estimate" }

@@ -1,107 +1,114 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <div>
-        <div class="page-header">
-            <h1>{{ entity.name }}</h1>
-        </div>
-        <div>
-            <a href="{{ path('project') }}" class="btn btn-primary">
-                {{ 'list.back'|trans }}
-            </a>
-        </div>
-        <div class="pull-left">
-            <div class="btn-group" role="group">
-                <a href="{{ path('project_calculate_average', { 'id': entity.id }) }}" class="btn btn-success">
-                    {{ 'statistics.reload'|trans }}
-                </a>
+    <div class="page-header">
+        <h1>{{ entity.name }}</h1>
 
-                <a href="{{ path('project_estimate', { 'id': entity.id }) }}" class="btn btn-success">
-                    {{ 'estimations.create'|trans }}
-                </a>
-            </div>
-        </div>
+        {{ form(delete_form) }}
 
-        <div class="">
-            <div class="pull-left">
-                <a href="{{ path('project_edit', { 'id': entity.id }) }}" class="btn btn-warning">
-                    {{ 'edit'|trans }}
-                </a>
-            </div>
-            <div class="pull-left">
-                {{ form(delete_form) }}
-            </div>
-        </div>
+        <a href="{{ path('project') }}" class="btn btn-primary">
+            {{ 'list.back'|trans }}
+        </a>
     </div>
 
 
-    <div class="row" style="clear:left">
-        <div class="col-md-8">
-            <div class="panel-primary">
-                <div class="panel-heading">{{ 'project.informations'|trans }}</div>
-                <table class="table">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'id'|trans }}</th>
-                        <td>{{ entity.id }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'name'|trans }}</th>
-                        <td>{{ entity.name }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'hd'|trans }}</th>
-                        <td>{{ entity.hd }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'velocity'|trans }}</th>
-                        <td>{{ entity.velocity }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'sprint.time'|trans }}</th>
-                        <td>{{ entity.sprintTime }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'holidays'|trans }}</th>
-                        <td>{{ entity.holidays }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'client.visits'|trans }}</th>
-                        <td>{{ entity.clientVisits }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="col-md-8">
-                <div class="panel-primary">
-                    <div class="panel-heading">{{ 'statistics'|trans }}</div>
+
+    <div class="panel-default" style="clear:left">
+        <div class="panel-heading"><h1>{{ 'project.informations'|trans }}</h1></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="panel-primary">
+                        <div class="panel-heading">
+                            {{ 'project.informations'|trans }}
+                            <a href="{{ path('project_edit', { 'id': entity.id }) }}" class="btn btn-warning btn-xs pull-right">
+                                {{ 'edit'|trans }}
+                            </a>
+                        </div>
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr>
+                                <th>{{ 'id'|trans }}</th>
+                                <td>{{ entity.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'hd'|trans }}</th>
+                                <td>{{ entity.hd }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'velocity'|trans }}</th>
+                                <td>{{ entity.velocity }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'sprint.time'|trans }}</th>
+                                <td>{{ entity.sprintTime }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'holidays'|trans }}</th>
+                                <td>{{ entity.holidays }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'client.visits'|trans }}</th>
+                                <td>{{ entity.clientVisits }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel-primary">
+                        <div class="panel-heading">
+                            {{ 'statistics'|trans }}
+                            <a href="{{ path('project_calculate_average', { 'id': entity.id }) }}" class="btn btn-success btn-xs pull-right">
+                                {{ 'update'|trans }}
+                            </a>
+                        </div>
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr>
+                                <th>{{ '1sp'|trans }}</th>
+                                <td>{{ (entity.avg1sp / 3600 )|number_format(2) }} h</td>
+                            </tr>
+                            <tr>
+                                <th>{{ '2sp'|trans }}</th>
+                                <td>{{ (entity.avg2sp/ 3600 )|number_format(2)  }} h</td>
+                            </tr>
+                            <tr>
+                                <th>{{ '3sp'|trans }}</th>
+                                <td>{{ (entity.avg3sp / 3600 )|number_format(2)}} h</td>
+                            </tr>
+                            <tr>
+                                <th>{{ '5sp'|trans }}</th>
+                                <td>{{ (entity.avg5sp / 3600 )|number_format(2) }} h</td>
+                            </tr>
+                            <tr>
+                                <th>{{ '8sp'|trans }}</th>
+                                <td>{{ (entity.avg8sp/ 3600 )|number_format(2) }} h</td>
+                            </tr>
+                            <tr>
+                                <th>{{ '13sp'|trans }}</th>
+                                <td>{{ (entity.avg13sp/ 3600 )|number_format(2) }} h</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-primary col-md-4">
+                    <div class="panel-heading">
+                        {{ 'estimations'|trans }}
+                        <a href="{{ path('project_estimate', { 'id': entity.id }) }}" class="btn btn-success btn-xs pull-right">
+                            {{ 'update'|trans }}
+                        </a>
+                    </div>
                     <table class="table">
                         <tbody>
                         <tr>
-                            <th>{{ '1sp'|trans }}</th>
-                            <td>{{ (entity.avg1sp / 3600 )|number_format(2) }} h</td>
+                            <th>{{ 'estimations.hours'|trans }}</th>
+                            <td>{{ entity.estimationByHours|date('Y-m-d') }}</td>
                         </tr>
                         <tr>
-                            <th>{{ '2sp'|trans }}</th>
-                            <td>{{ (entity.avg2sp/ 3600 )|number_format(2)  }} h</td>
-                        </tr>
-                        <tr>
-                            <th>{{ '3sp'|trans }}</th>
-                            <td>{{ (entity.avg3sp / 3600 )|number_format(2)}} h</td>
-                        </tr>
-                        <tr>
-                            <th>{{ '5sp'|trans }}</th>
-                            <td>{{ (entity.avg5sp / 3600 )|number_format(2) }} h</td>
-                        </tr>
-                        <tr>
-                            <th>{{ '8sp'|trans }}</th>
-                            <td>{{ (entity.avg8sp/ 3600 )|number_format(2) }} h</td>
-                        </tr>
-                        <tr>
-                            <th>{{ '13sp'|trans }}</th>
-                            <td>{{ (entity.avg13sp/ 3600 )|number_format(2) }} h</td>
+                            <th>{{ 'estimations.sprints'|trans }}</th>
+                            <td>{{ entity.estimationBySprints|date('Y-m-d') }}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -110,28 +117,12 @@
         </div>
     </div>
 
-    <div class="panel-primary">
-        <div class="panel-heading">{{ 'estimations'|trans }}</div>
-        <table class="table">
-            <tbody>
-            <tr>
-                <th>{{ 'estimations.hours'|trans }}</th>
-                <td>{{ entity.estimationByHours|date('Y-m-d') }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'estimations.sprints'|trans }}</th>
-                <td>{{ entity.estimationBySprints|date('Y-m-d') }}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
 
     <div class="panel-default">
         <div class="panel-heading"><h1>{{ 'issues.list'|trans }}</h1></div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="panel-success">
                         <div class="panel-heading">{{ 'add.issue.manually'|trans }}</div>
                         <div class="panel-body">
@@ -141,8 +132,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ render(controller('EstimationsMainBundle:Project:load', { 'id':entity.id })) }}
+                </div>
+                <div class="col-md-4">
+                    <div class="panel-danger">
+                        <div class="panel-heading">{{ 'delete.all.issues'|trans }}</div>
+                        <div class="panel-body">
+                            {{ form(delete_all_issues_form) }}
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -154,6 +154,7 @@
                 <td>{{ 'time.spent'|trans }}</td>
                 <td>{{ 'story.points'|trans }}
                 <td>{{ 'sprint'|trans }}</td>
+                <td>{{ 'actions'|trans }}</td>
             </tr>
             </thead>
             <tbody>
@@ -164,6 +165,15 @@
                 <td>{{ (issue.timeSpent/ 3600 )|number_format(2) }} h</td>
                 <td>{{ issue.storyPoints }}</td>
                 <td>{{ issue.sprint }}</td>
+                <td>
+                    <form action="{{ path('issue_delete', { 'projectId': entity.id, 'id': issue.id }) }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        {{ form_widget(delete_issues_forms[issue.id]) }}
+                        <button type="submit" class="btn btn-xs btn-danger">
+                            {{ 'delete'|trans }}
+                        </button>
+                    </form>
+                </td>
             </tr>
             {%  endfor %}
             </tbody>
