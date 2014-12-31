@@ -715,7 +715,7 @@ class Project
         return $selectedIssues;
     }
 
-    public function getAveragePerSprint()
+    public function calculateVelocity()
     {
         $numberOfStoryPoints = 0;
 
@@ -724,7 +724,9 @@ class Project
             $numberOfStoryPoints += $issue->getStoryPoints();
         }
 
-        return $numberOfStoryPoints / $this->statisticsSprints;
+        $this->velocity = $numberOfStoryPoints / $this->statisticsSprints;
+
+        return $this;
     }
     
     public function getRemainingMinutes(){

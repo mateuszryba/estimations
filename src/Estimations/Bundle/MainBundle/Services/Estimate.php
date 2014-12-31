@@ -27,11 +27,9 @@ class Estimate{
 
     public function estimateBySprints(Project $project)
     {
-        $avgStoryPointsPerSprint = $project->getAveragePerSprint();
+        $project->calculateVelocity();
 
-        $project->setVelocity($avgStoryPointsPerSprint);
-
-        $remainingSprints = $project->getAllRemainingSP() / $avgStoryPointsPerSprint;
+        $remainingSprints = $project->getAllRemainingSP() / $project->getVelocity();
 
         $remainingWeeks = ceil($remainingSprints) * $project->getSprintTime();
 
