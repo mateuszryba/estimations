@@ -719,8 +719,6 @@ class Project
     {
         $numberOfStoryPoints = 0;
 
-        var_dump($this->getSelectedSprintsIssues());exit;
-
         foreach($this->getSelectedSprintsIssues() as $issue)
         {
             $numberOfStoryPoints += $issue->getStoryPoints();
