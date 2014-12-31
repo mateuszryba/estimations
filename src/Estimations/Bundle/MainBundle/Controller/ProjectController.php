@@ -240,6 +240,8 @@ class ProjectController extends Controller
         $averageCalc = $this->get('estimations_main.calculateAverageSPs');
         $averageCalc->calculateAverages($project);
 
+        $project->calculateVelocity();
+
         $em->persist($project);
         $em->flush();
 
