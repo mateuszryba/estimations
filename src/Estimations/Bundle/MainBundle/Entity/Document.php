@@ -30,18 +30,18 @@ class Document
 
     public function getAbsolutePath()
     {
-        return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
+        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
     }
 
     public function getWebPath()
     {
-        return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
+        return null === $this->path ? null : $this->getUploadDir() . '/' . $this->path;
     }
 
     protected function getUploadRootDir()
     {
         // the absolute directory path where uploaded documents should be saved
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
     protected function getUploadDir()
@@ -73,12 +73,12 @@ class Document
         // clean up the file property as you won't need it anymore
         $this->doc = null;
     }
-    
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -101,7 +101,7 @@ class Document
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {

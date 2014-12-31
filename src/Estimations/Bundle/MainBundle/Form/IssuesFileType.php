@@ -20,8 +20,7 @@ class IssuesFileType extends AbstractType
                 'label' => false,
                 'attr' => array(
                     'class' => 'btn btn-success'
-                )))
-        ;
+                )));
     }
 
     /**

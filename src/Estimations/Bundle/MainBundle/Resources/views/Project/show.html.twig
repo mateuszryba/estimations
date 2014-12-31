@@ -21,7 +21,8 @@
                     <div class="panel-primary">
                         <div class="panel-heading">
                             {{ 'project.informations'|trans }}
-                            <a href="{{ path('project_edit', { 'id': entity.id }) }}" class="btn btn-warning btn-xs pull-right">
+                            <a href="{{ path('project_edit', { 'id': entity.id }) }}"
+                               class="btn btn-warning btn-xs pull-right">
                                 {{ 'edit'|trans }}
                             </a>
                         </div>
@@ -55,7 +56,8 @@
                     <div class="panel-primary">
                         <div class="panel-heading">
                             {{ 'statistics'|trans }}
-                            <a href="{{ path('project_calculate_average', { 'id': entity.id }) }}" class="btn btn-success btn-xs pull-right">
+                            <a href="{{ path('project_calculate_average', { 'id': entity.id }) }}"
+                               class="btn btn-success btn-xs pull-right">
                                 {{ 'update'|trans }}
                             </a>
                         </div>
@@ -71,11 +73,11 @@
                             </tr>
                             <tr>
                                 <th>{{ '2sp'|trans }}</th>
-                                <td>{{ (entity.avg2sp/ 3600 )|number_format(2)  }} h</td>
+                                <td>{{ (entity.avg2sp/ 3600 )|number_format(2) }} h</td>
                             </tr>
                             <tr>
                                 <th>{{ '3sp'|trans }}</th>
-                                <td>{{ (entity.avg3sp / 3600 )|number_format(2)}} h</td>
+                                <td>{{ (entity.avg3sp / 3600 )|number_format(2) }} h</td>
                             </tr>
                             <tr>
                                 <th>{{ '5sp'|trans }}</th>
@@ -96,7 +98,8 @@
                 <div class="panel-primary col-md-4">
                     <div class="panel-heading">
                         {{ 'estimations'|trans }}
-                        <a href="{{ path('project_estimate', { 'id': entity.id }) }}" class="btn btn-success btn-xs pull-right">
+                        <a href="{{ path('project_estimate', { 'id': entity.id }) }}"
+                           class="btn btn-success btn-xs pull-right">
                             {{ 'update'|trans }}
                         </a>
                     </div>
@@ -159,23 +162,24 @@
             </thead>
             <tbody>
             {% for issue in issues %}
-            <tr>
-                <td>{{ issue.id }}</td>
-                <td>{{ issue.issueKey }}</td>
-                <td>{{ (issue.timeSpent/ 3600 )|number_format(2) }} h</td>
-                <td>{{ issue.storyPoints }}</td>
-                <td>{{ issue.sprint }}</td>
-                <td>
-                    <form action="{{ path('issue_delete', { 'projectId': entity.id, 'id': issue.id }) }}" method="post">
-                        <input type="hidden" name="_method" value="DELETE" />
-                        {{ form_widget(delete_issues_forms[issue.id]) }}
-                        <button type="submit" class="btn btn-xs btn-danger">
-                            {{ 'delete'|trans }}
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            {%  endfor %}
+                <tr>
+                    <td>{{ issue.id }}</td>
+                    <td>{{ issue.issueKey }}</td>
+                    <td>{{ (issue.timeSpent/ 3600 )|number_format(2) }} h</td>
+                    <td>{{ issue.storyPoints }}</td>
+                    <td>{{ issue.sprint }}</td>
+                    <td>
+                        <form action="{{ path('issue_delete', { 'projectId': entity.id, 'id': issue.id }) }}"
+                              method="post">
+                            <input type="hidden" name="_method" value="DELETE"/>
+                            {{ form_widget(delete_issues_forms[issue.id]) }}
+                            <button type="submit" class="btn btn-xs btn-danger">
+                                {{ 'delete'|trans }}
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
