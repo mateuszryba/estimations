@@ -3,13 +3,32 @@
 {% block body -%}
     <h1>{{ 'project.edit'|trans }}</h1>
 
-    {{ form(edit_form) }}
+    {{ form_start(edit_form, {'style': 'horizontal'}) }}
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="text-center">{{ 'project.informations'|trans }}</h3>
+                {{ form_row(edit_form.name, { 'label_col': 6, 'widget_col': 6})  }}
+                {{ form_row(edit_form.hd, { 'label_col': 6, 'widget_col': 6}) }}
+                {{ form_row(edit_form.sprintTime, { 'label_col': 6, 'widget_col': 6}) }}
+                {{ form_row(edit_form.statisticsSprints, { 'label_col': 6, 'widget_col': 6}) }}
+                {{ form_row(edit_form.holidays, { 'label_col': 6, 'widget_col': 6}) }}
+                {{ form_row(edit_form.clientVisits, { 'label_col': 6, 'widget_col': 6}) }}
+                {{ form_row(edit_form.velocity, { 'label_col': 6, 'widget_col': 6}) }}
+            </div>
+            <h3 class="text-center">{{ 'issues.remaining'|trans }}</h3>
+            <div class="col-md-6">
+                {{ form_row(edit_form.remaining1SP, { 'label_col': 6, 'widget_col': 6}) }}
+                {{ form_row(edit_form.remaining2SP, { 'label_col': 6, 'widget_col': 6}) }}
+                {{ form_row(edit_form.remaining3SP, { 'label_col': 6, 'widget_col': 6}) }}
+                {{ form_row(edit_form.remaining5SP, { 'label_col': 6, 'widget_col': 6}) }}
+                {{ form_row(edit_form.remaining8SP, { 'label_col': 6, 'widget_col': 6}) }}
+                {{ form_row(edit_form.remaining13SP, { 'label_col': 6, 'widget_col': 6}) }}
+                {{ form_row(edit_form.submit) }}
+            </div>
+        </div>
+    {{ form_end(edit_form) }}
 
-    <a href="{{ path('project') }}" class="btn btn-primary">
-        {{ 'list.back'|trans }}
+    <a href="{{ path('project_show', {'id': entity.id}) }}" class="btn btn-primary">
+        {{ 'project.back'|trans }}
     </a>
-    {{ form_start(delete_form) }}
-    {{ form_errors(delete_form) }}
-    {{ form_row(delete_form.submit) }}
-    {{ form_end(delete_form) }}
 {% endblock %}

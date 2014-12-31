@@ -1,13 +1,34 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Project creation</h1>
+    <h1>{{ 'project.create'|trans }}</h1>
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_start(form, {'style': 'horizontal'}) }}
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="text-center">{{ 'project.informations'|trans }}</h3>
+            {{ form_row(form.name, { 'label_col': 6, 'widget_col': 6})  }}
+            {{ form_row(form.hd, { 'label_col': 6, 'widget_col': 6}) }}
+            {{ form_row(form.sprintTime, { 'label_col': 6, 'widget_col': 6}) }}
+            {{ form_row(form.statisticsSprints, { 'label_col': 6, 'widget_col': 6}) }}
+            {{ form_row(form.holidays, { 'label_col': 6, 'widget_col': 6}) }}
+            {{ form_row(form.clientVisits, { 'label_col': 6, 'widget_col': 6}) }}
+            {{ form_row(form.velocity, { 'label_col': 6, 'widget_col': 6}) }}
+        </div>
+        <h3 class="text-center">{{ 'issues.remaining'|trans }}</h3>
+        <div class="col-md-6">
+            {{ form_row(form.remaining1SP, { 'label_col': 6, 'widget_col': 6}) }}
+            {{ form_row(form.remaining2SP, { 'label_col': 6, 'widget_col': 6}) }}
+            {{ form_row(form.remaining3SP, { 'label_col': 6, 'widget_col': 6}) }}
+            {{ form_row(form.remaining5SP, { 'label_col': 6, 'widget_col': 6}) }}
+            {{ form_row(form.remaining8SP, { 'label_col': 6, 'widget_col': 6}) }}
+            {{ form_row(form.remaining13SP, { 'label_col': 6, 'widget_col': 6}) }}
+            {{ form_row(form.submit) }}
+        </div>
+    </div>
     {{ form_end(form) }}
 
-    <a href="{{ path('project') }}">
+    <a href="{{ path('project') }}" class="btn btn-primary">
         {{ 'list.back'|trans }}
     </a>
 {% endblock %}
