@@ -398,15 +398,6 @@ class Project
         return $this;
     }
 
-    /**
-     * Get avg1SP
-     *
-     * @return string
-     */
-    public function getAvg1SP()
-    {
-        return $this->avg1SP;
-    }
 
     /**
      * Set avg2SP

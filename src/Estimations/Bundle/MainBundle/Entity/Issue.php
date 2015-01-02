@@ -30,44 +30,6 @@ class Issue
      */
     protected $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="issueKey", type="string", length=20)
-     */
-    protected $issueKey;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="timeSpent", type="integer")
-     */
-    protected $timeSpent;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="storyPoints", type="integer")
-     */
-    protected $storyPoints;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="sprint", type="integer")
-     */
-    protected $sprint;
-
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set issueKey
