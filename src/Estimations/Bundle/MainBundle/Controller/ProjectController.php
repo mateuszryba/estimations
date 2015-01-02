@@ -2,6 +2,7 @@
 
 namespace Estimations\Bundle\MainBundle\Controller;
 
+use Doctrine\ORM\TransactionRequiredException;
 use Estimations\Bundle\MainBundle\Form\IssuesFileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,6 +33,7 @@ class ProjectController extends Controller
             'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Project entity.
      *
@@ -52,7 +54,7 @@ class ProjectController extends Controller
 
         return $this->render('EstimationsMainBundle:Project:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 
@@ -70,7 +72,7 @@ class ProjectController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => $this->get('translator')->trans('project.add')));
 
         return $form;
     }
@@ -82,11 +84,11 @@ class ProjectController extends Controller
     public function newAction()
     {
         $entity = new Project();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('EstimationsMainBundle:Project:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 
@@ -108,11 +110,58 @@ class ProjectController extends Controller
 
         $issues = $entity->getIssues();
 
+        $deleteIssueForms = array();
+
+        $deleteAllIssuesForm = $this->createDeleteAllIssuesForm($id)->createView();
+
+        foreach ($issues as $issue) {
+            $deleteIssueForms[$issue->getId()] = $this->createDeleteIssueForm($id, $issue->getId())->createView();
+        }
+
         return $this->render('EstimationsMainBundle:Project:show.html.twig', array(
-            'entity'      => $entity,
-            'issues'      => $issues,
+            'entity' => $entity,
+            'issues' => $issues,
+            'delete_issues_forms' => $deleteIssueForms,
+            'delete_all_issues_form' => $deleteAllIssuesForm,
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+    /**
+     * Creates a form to delete a Project entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    protected function createDeleteForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('project_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'delete.project', 'attr' => array('class' => 'btn btn-danger pull-right')))
+            ->getForm();
+    }
+
+    protected function createDeleteAllIssuesForm($projectId)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('delete_all_issues', array('projectId' => $projectId)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array(
+                'label' => $this->get('translator')->trans('delete.all'),
+                'attr' => array(
+                    'class' => 'btn btn-danger'
+                )))
+            ->getForm();
+    }
+
+    protected function createDeleteIssueForm($projectId, $id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('issue_delete', array('id' => $id, 'projectId' => $projectId)))
+            ->setMethod('DELETE')
+            ->getForm();
     }
 
     /**
@@ -133,19 +182,18 @@ class ProjectController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('EstimationsMainBundle:Project:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a Project entity.
-    *
-    * @param Project $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Project entity.
+     *
+     * @param Project $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     protected function createEditForm(Project $entity)
     {
         $form = $this->createForm(new ProjectType(), $entity, array(
@@ -153,10 +201,11 @@ class ProjectController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => $this->get('translator')->trans('project.edit')));
 
         return $form;
     }
+
     /**
      * Edits an existing Project entity.
      *
@@ -182,11 +231,12 @@ class ProjectController extends Controller
         }
 
         return $this->render('EstimationsMainBundle:Project:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a Project entity.
      *
@@ -228,6 +278,8 @@ class ProjectController extends Controller
         $averageCalc = $this->get('estimations_main.calculateAverageSPs');
         $averageCalc->calculateAverages($project);
 
+        $project->calculateVelocity();
+
         $em->persist($project);
         $em->flush();
 
@@ -261,28 +313,29 @@ class ProjectController extends Controller
         return $this->redirect($this->generateUrl('project_show', array('id' => $id)));
     }
 
-    protected function createLoadForm(Document $document, $id)
+    public function loadAction($id)
     {
-        $form = $this->createForm(new IssuesFileType(), $document, array(
-            'action' => $this->generateUrl('project_import_issues', array('id'=>$id)),
-            'method' => 'POST',
-        ));
-        $form->add('submit', 'submit', array(
-            'label' =>  $this->get('translator')->trans('import'),
-            'attr' => array('class' => 'btn-success')
-        ));
-
-        return $form;
-    }
-
-    public function loadAction($id){
         $document = new Document();
 
-        $form   = $this->createLoadForm($document, $id);
+        $form = $this->createLoadForm($document, $id);
 
         return $this->render('EstimationsMainBundle:Project:upload.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    protected function createLoadForm(Document $document, $id)
+    {
+        $form = $this->createForm(new IssuesFileType(), $document, array(
+            'action' => $this->generateUrl('project_import_issues', array('id' => $id)),
+            'method' => 'POST',
+        ));
+        $form->add('submit', 'submit', array(
+            'label' => $this->get('translator')->trans('import'),
+            'attr' => array('class' => 'btn-success')
+        ));
+
+        return $form;
     }
 
     public function loadIssuesAction(Request $request, $id)
@@ -294,16 +347,13 @@ class ProjectController extends Controller
         $form = $this->createLoadForm($document, $id);
         $form->handleRequest($request);
 
-        if ($this->getRequest()->getMethod() === 'POST'){
-           // $form->handleRequest($this->getRequest());
-            if($form->isValid()){
+        if ($this->getRequest()->getMethod() === 'POST') {
+            if ($form->isValid()) {
                 $document->upload();
-                if(file_exists($document->getAbsolutePath()))
-                {
+                if (file_exists($document->getAbsolutePath())) {
                     $issues = $this->get('estimations_main.importer')->importIssuesFromXls($document->getAbsolutePath(), $project);
 
-                    foreach($issues as $issue)
-                    {
+                    foreach ($issues as $issue) {
                         $em->persist($issue);
                         $project->addIssue($issue);
                     }
@@ -312,31 +362,58 @@ class ProjectController extends Controller
                     $em->flush();
 
                     $this->redirect($this->generateUrl('project'));
-                }
-                else
-                {
+                } else {
                     echo('File does not exist');
                     exit;
                 }
             }
         }
-        return $this->redirect($this->generateUrl('project_show', array('id'=>$id)));
+        return $this->redirect($this->generateUrl('project_show', array('id' => $id)));
     }
 
-    /**
-     * Creates a form to delete a Project entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    protected function createDeleteForm($id)
+    public function deleteIssueAction(Request $request, $projectId, $id)
     {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('project_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'delete', 'attr' => array('class' => 'btn btn-danger')))
-            ->getForm()
-        ;
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('EstimationsMainBundle:Issue')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Project entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('project_show', array('id' => $projectId)));
     }
+
+    public function deleteAllIssuesAction(Request $request, $projectId)
+    {
+        $form = $this->createDeleteAllIssuesForm($projectId);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('EstimationsMainBundle:Project')->find($projectId);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Project entity.');
+            }
+
+            $issues = $entity->getIssues();
+
+            foreach ($issues as $issue) {
+                $em->remove($issue);
+            }
+
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('project_show', array('id' => $projectId)));
+    }
+
 }

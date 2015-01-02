@@ -40,7 +40,7 @@ class IssueController extends Controller
 
         return $this->render('EstimationsMainBundle:Issue:new.html.twig', array(
             'entity' => $issue,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 

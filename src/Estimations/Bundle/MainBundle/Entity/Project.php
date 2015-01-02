@@ -117,14 +117,13 @@ class Project
      * @ORM\Column(name="remaining13SP", type="integer")
      */
     protected $remaining13SP;
-    
+
     /**
      * @var float
      *
      * @ORM\Column(name="avg1sp", type="float", nullable=true)
      */
     protected $avg1SP;
-
 
 
     /**
@@ -135,15 +134,12 @@ class Project
     protected $avg2SP;
 
 
-
     /**
      * @var float
      *
      * @ORM\Column(name="avg3sp", type="float", nullable=true)
      */
     protected $avg3SP;
-
-
 
 
     /**
@@ -154,7 +150,6 @@ class Project
     protected $avg5SP;
 
 
-
     /**
      * @var float
      *
@@ -163,15 +158,12 @@ class Project
     protected $avg8SP;
 
 
-
-
     /**
      * @var float
      *
      * @ORM\Column(name="avg13sp", type="float", nullable=true)
      */
     protected $avg13SP;
-
 
 
     /**
@@ -200,7 +192,7 @@ class Project
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -223,7 +215,7 @@ class Project
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -246,7 +238,7 @@ class Project
     /**
      * Get hd
      *
-     * @return integer 
+     * @return integer
      */
     public function getHd()
     {
@@ -269,7 +261,7 @@ class Project
     /**
      * Get velocity
      *
-     * @return integer 
+     * @return integer
      */
     public function getVelocity()
     {
@@ -292,7 +284,7 @@ class Project
     /**
      * Get sprintTime
      *
-     * @return integer 
+     * @return integer
      */
     public function getSprintTime()
     {
@@ -315,7 +307,7 @@ class Project
     /**
      * Get holidays
      *
-     * @return integer 
+     * @return integer
      */
     public function getHolidays()
     {
@@ -338,7 +330,7 @@ class Project
     /**
      * Get clientVisits
      *
-     * @return integer 
+     * @return integer
      */
     public function getClientVisits()
     {
@@ -385,13 +377,13 @@ class Project
     /**
      * Get issues
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIssues()
     {
         return $this->issues;
     }
-    
+
 
     /**
      * Set avg1SP
@@ -409,7 +401,7 @@ class Project
     /**
      * Get avg1SP
      *
-     * @return string 
+     * @return string
      */
     public function getAvg1SP()
     {
@@ -432,7 +424,7 @@ class Project
     /**
      * Get avg2SP
      *
-     * @return string 
+     * @return string
      */
     public function getAvg2SP()
     {
@@ -455,7 +447,7 @@ class Project
     /**
      * Get avg3SP
      *
-     * @return string 
+     * @return string
      */
     public function getAvg3SP()
     {
@@ -478,7 +470,7 @@ class Project
     /**
      * Get avg5SP
      *
-     * @return string 
+     * @return string
      */
     public function getAvg5SP()
     {
@@ -501,7 +493,7 @@ class Project
     /**
      * Get avg8SP
      *
-     * @return string 
+     * @return string
      */
     public function getAvg8SP()
     {
@@ -524,7 +516,7 @@ class Project
     /**
      * Get avg13SP
      *
-     * @return string 
+     * @return string
      */
     public function getAvg13SP()
     {
@@ -565,7 +557,7 @@ class Project
     /**
      * Get remaining1SP
      *
-     * @return integer 
+     * @return integer
      */
     public function getRemaining1SP()
     {
@@ -588,7 +580,7 @@ class Project
     /**
      * Get remaining2SP
      *
-     * @return integer 
+     * @return integer
      */
     public function getRemaining2SP()
     {
@@ -611,7 +603,7 @@ class Project
     /**
      * Get remaining3SP
      *
-     * @return integer 
+     * @return integer
      */
     public function getRemaining3SP()
     {
@@ -634,7 +626,7 @@ class Project
     /**
      * Get remaining5SP
      *
-     * @return integer 
+     * @return integer
      */
     public function getRemaining5SP()
     {
@@ -657,7 +649,7 @@ class Project
     /**
      * Get remaining8SP
      *
-     * @return integer 
+     * @return integer
      */
     public function getRemaining8SP()
     {
@@ -680,7 +672,7 @@ class Project
     /**
      * Get remaining13SP
      *
-     * @return integer 
+     * @return integer
      */
     public function getRemaining13SP()
     {
@@ -692,7 +684,7 @@ class Project
      */
     public function getLastSprint()
     {
-        $sprints = $this->issues->map(function($issue) {
+        $sprints = $this->issues->map(function ($issue) {
             return $issue->getSprint();
         })->toArray();
 
@@ -706,8 +698,7 @@ class Project
         $selectedIssues = array();
 
         foreach ($this->issues as $issue) {
-            if($issue->getSprint() > $lastSprint - $this->statisticsSprints)
-            {
+            if ($issue->getSprint() > $lastSprint - $this->statisticsSprints) {
                 $selectedIssues[] = $issue;
             }
         }
@@ -715,21 +706,21 @@ class Project
         return $selectedIssues;
     }
 
-    public function getAveragePerSprint()
+    public function calculateVelocity()
     {
         $numberOfStoryPoints = 0;
 
-        var_dump($this->getSelectedSprintsIssues());exit;
-
-        foreach($this->getSelectedSprintsIssues() as $issue)
-        {
+        foreach ($this->getSelectedSprintsIssues() as $issue) {
             $numberOfStoryPoints += $issue->getStoryPoints();
         }
 
-        return $numberOfStoryPoints / $this->statisticsSprints;
+        $this->velocity = $numberOfStoryPoints / $this->statisticsSprints;
+
+        return $this;
     }
-    
-    public function getRemainingMinutes(){
+
+    public function getRemainingMinutes()
+    {
         $remainingMinutes
             = $this->getAvg1SP() * $this->getRemaining1SP()
             + $this->getAvg2SP() * $this->getRemaining2SP()
@@ -757,7 +748,7 @@ class Project
     /**
      * Get estimationByHours
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEstimationByHours()
     {
@@ -780,7 +771,7 @@ class Project
     /**
      * Get estimationBySprints
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEstimationBySprints()
     {
@@ -790,7 +781,7 @@ class Project
     public function getAllRemainingSP()
     {
         $allRemainingSP =
-            + $this->remaining1SP * 1
+            +$this->remaining1SP * 1
             + $this->remaining2SP * 2
             + $this->remaining3SP * 3
             + $this->remaining5SP * 5
@@ -816,7 +807,7 @@ class Project
     /**
      * Get statisticsSprints
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatisticsSprints()
     {

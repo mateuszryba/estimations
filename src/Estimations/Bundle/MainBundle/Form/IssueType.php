@@ -9,7 +9,7 @@ use Estimations\Bundle\MainBundle\Entity\Project;
 
 class IssueType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -19,10 +19,9 @@ class IssueType extends AbstractType
             ->add('issueKey')
             ->add('timeSpent')
             ->add('storyPoints')
-            ->add('sprint')
-        ;
+            ->add('sprint');
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
