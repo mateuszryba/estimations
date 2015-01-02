@@ -1,0 +1,3 @@
+landing:
+    path:     /
+    defaults: { _controller: "EstimationsMainBundle:Main:landing" }
