@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <div class="jumbotron">
+        <h1>{{ 'estimations.welcome'|trans }}<h1>
+        <p><a class="btn btn-primary btn-lg" href="{{ path('project') }}" role="button">{{ 'new.world'|trans }}</a></p>
+    </div>
+
+{% endblock body %}
