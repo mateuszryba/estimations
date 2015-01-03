@@ -16,7 +16,7 @@ class Project
 {
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Estimations\Bundle\MainBundle\Entity\Issue", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="Estimations\Bundle\MainBundle\Entity\Issue", mappedBy="project", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $issues;
 
@@ -812,5 +812,11 @@ class Project
     public function getStatisticsSprints()
     {
         return $this->statisticsSprints;
+    }
+
+    protected function removeIssues($issue)
+    {
+        $this->issues->remove($issue);
+        $issue->setProject(null);
     }
 }
