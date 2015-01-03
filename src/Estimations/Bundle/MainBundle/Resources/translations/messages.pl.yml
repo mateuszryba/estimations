@@ -1,5 +1,6 @@
 estimations.welcome: "Witaj w Estimations"
 new.world: "Poznaj nowy świat"
+no.projects: "Brak projektów do wyświetlenia"
 id:                   "Id"
 name: "Nazwa"
 hd:   "Ilość roboczogodzin na dzień"

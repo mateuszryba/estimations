@@ -6,31 +6,39 @@
         {{ 'project.create'|trans }}
     </a>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>{{ 'name'|trans }}</th>
-            <th>{{ 'velocity'|trans }}</th>
-            <th>{{ 'estimations.hours'|trans }}</th>
-            <th>{{ 'estimations.sprints'|trans }}</th>
-            <th>{{ 'actions'|trans }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
+    {% if entities is empty %}
+
+        <h2>{{ 'no.projects'|trans }}</h2>
+
+    {% else %}
+
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <td>{{ entity.name }}</td>
-                <td>{{ entity.velocity }}</td>
-                <td>{{ entity.estimationByHours|date('Y-m-d')  }}</td>
-                <td>{{ entity.estimationBySprints|date('Y-m-d')  }}</td>
-                <td>
-                    <a href="{{ path('project_show', { 'id': entity.id }) }}"
-                       class="btn btn-primary btn-xs">{{ 'show'|trans }}</a>
-                    <a href="{{ path('project_edit', { 'id': entity.id }) }}"
-                       class="btn btn-warning btn-xs">{{ 'edit'|trans }}</a>
-                </td>
+                <th>{{ 'name'|trans }}</th>
+                <th>{{ 'velocity'|trans }}</th>
+                <th>{{ 'estimations.hours'|trans }}</th>
+                <th>{{ 'estimations.sprints'|trans }}</th>
+                <th>{{ 'actions'|trans }}</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.velocity }}</td>
+                    <td>{{ entity.estimationByHours|date('Y-m-d')  }}</td>
+                    <td>{{ entity.estimationBySprints|date('Y-m-d')  }}</td>
+                    <td>
+                        <a href="{{ path('project_show', { 'id': entity.id }) }}"
+                           class="btn btn-primary btn-xs">{{ 'show'|trans }}</a>
+                        <a href="{{ path('project_edit', { 'id': entity.id }) }}"
+                           class="btn btn-warning btn-xs">{{ 'edit'|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
 {% endblock %}
