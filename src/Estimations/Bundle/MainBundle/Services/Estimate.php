@@ -61,8 +61,6 @@ class Estimate
 
             // how many sprints do we have left
             $remainingSprints = ceil($remainingDays / ($project->getSprintTime() * 5));
-            echo"sprints";
-            var_dump($remainingSprints);
 
             $scrumEventsInMinutes = $remainingSprints * $timeOfScrumEventsPerSprint;
 
