@@ -688,6 +688,11 @@ class Project
             return $issue->getSprint();
         })->toArray();
 
+        if(empty($sprints))
+        {
+            return 0;
+        }
+
         return max($sprints);
     }
 
