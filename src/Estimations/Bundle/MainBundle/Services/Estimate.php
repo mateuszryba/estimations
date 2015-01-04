@@ -23,7 +23,7 @@ class Estimate
         $clientVisitsInMinutes = $project->getClientVisits() * $minutesPerDay;
 
         // employees holidays in minutes
-        $holidaysInMinutes = $project->getHolidays() * 60;
+        $holidaysInMinutes = $project->getHolidays() * 60 * 8;
 
         // local variable for remaining minutes to finish project
         $remainingMinutes = $project->getRemainingMinutes();
@@ -84,6 +84,11 @@ class Estimate
     public function estimateBySprints(Project $project)
     {
         $project->calculateVelocity();
+
+        if(0 === $project->getVelocity())
+        {
+            return null;
+        }
 
         $remainingSprints = $project->getAllRemainingSP() / $project->getVelocity();
 
