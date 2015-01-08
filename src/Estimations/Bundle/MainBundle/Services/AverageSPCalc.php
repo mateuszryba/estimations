@@ -76,24 +76,70 @@ class AverageSPCalc
      */
     protected function assignAveragesToProject(Project $project, array $arrayOfAverages)
     {
+        $averages = array();
+        $empties = array();
+
         if (0 != $arrayOfAverages['c1']) {
-            $project->setAvg1SP($arrayOfAverages['1'] / (float)$arrayOfAverages['c1']);
+            $averages['1'] = ($arrayOfAverages['1'] / (float)$arrayOfAverages['c1']);
+        }
+        else
+        {
+            $empties[] = 1;
         }
         if (0 != $arrayOfAverages['c2']) {
-            $project->setAvg2SP($arrayOfAverages['2'] / (float)$arrayOfAverages['c2']);
+            $averages['2'] = ($arrayOfAverages['2'] / (float)$arrayOfAverages['c2']);
+        }
+        else
+        {
+            $empties[] = 2;
         }
         if (0 != $arrayOfAverages['c3']) {
-            $project->setAvg3SP($arrayOfAverages['3'] / (float)$arrayOfAverages['c3']);
+            $averages['3'] = ($arrayOfAverages['3'] / (float)$arrayOfAverages['c3']);
+        }
+        else
+        {
+            $empties[] = 3;
         }
         if (0 != $arrayOfAverages['c5']) {
-            $project->setAvg5SP($arrayOfAverages['5'] / (float)$arrayOfAverages['c5']);
+            $averages['5'] = ($arrayOfAverages['5'] / (float)$arrayOfAverages['c5']);
+        }
+        else
+        {
+            $empties[] = 5;
         }
         if (0 != $arrayOfAverages['c8']) {
-            $project->setAvg8SP($arrayOfAverages['8'] / (float)$arrayOfAverages['c8']);
+            $averages['8'] = ($arrayOfAverages['8'] / (float)$arrayOfAverages['c8']);
+        }
+        else
+        {
+            $empties[] = 8;
         }
         if (0 != $arrayOfAverages['c13']) {
-            $project->setAvg13SP($arrayOfAverages['13'] / (float)$arrayOfAverages['c13']);
+            $averages['13'] = ($arrayOfAverages['13'] / (float)$arrayOfAverages['c13']);
         }
+        else
+        {
+            $empties[] = 13;
+        }
+
+        if(empty($averages)){
+            return $project;
+        }
+
+        if(!empty($empties))
+        {
+            foreach($empties as $sp){
+                reset($averages);
+                $averages[$sp] = $sp * (current($averages) / key($averages));
+            }
+        }
+
+        $project->setAvg1SP($averages['1']);
+        $project->setAvg2SP($averages['2']);
+        $project->setAvg3SP($averages['3']);
+        $project->setAvg5SP($averages['5']);
+        $project->setAvg8SP($averages['8']);
+        $project->setAvg13SP($averages['13']);
 
         return $project;
     }

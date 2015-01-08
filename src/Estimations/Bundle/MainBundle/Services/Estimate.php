@@ -74,6 +74,8 @@ class Estimate
         }
         while(($remainingDaysWithScrumEvents - $remainingDays) > 1);
 
+        var_dump($remainingDays);exit;
+
         $endDate = $this->businessDays->getEndDate(date("Y/m/d"), $remainingDays);
 
         return $endDate;
@@ -87,7 +89,6 @@ class Estimate
         {
             return null;
         }
-
         $remainingSprints = $project->getAllRemainingSP() / $project->getVelocity();
 
         $remainingWeeks = ceil($remainingSprints) * $project->getSprintTime();
