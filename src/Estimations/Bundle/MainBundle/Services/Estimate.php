@@ -74,8 +74,6 @@ class Estimate
         }
         while(($remainingDaysWithScrumEvents - $remainingDays) > 1);
 
-        var_dump($remainingDays);exit;
-
         $endDate = $this->businessDays->getEndDate(date("Y/m/d"), $remainingDays);
 
         return $endDate;
